@@ -5,19 +5,36 @@
  */
 package GUI;
 
+import Doctor.DoctorDashboard;
+import Secretary.SecretaryDashboard;
+import Admin.AdminDashboard;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
 /**
  *
  * @author ljones30
  */
 public class Login extends javax.swing.JFrame {
 
+    String loggedInID = "0";
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
     }
-
+public String getloggedInId()
+{
+    return loggedInID;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,8 +45,8 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        tfPassword = new javax.swing.JPasswordField();
+        tfUsername = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -41,15 +58,20 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Login");
 
-        jPasswordField1.setName("jFieldPassword"); // NOI18N
+        tfPassword.setName("jFieldPassword"); // NOI18N
 
-        jFormattedTextField1.setName("jFieldUsername"); // NOI18N
+        tfUsername.setName("jFieldUsername"); // NOI18N
 
         jLabel2.setText("Username");
 
         jLabel3.setText("Password");
 
         jButton1.setText("Login");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("New Patient");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -71,8 +93,8 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jPasswordField1)
-                    .addComponent(jFormattedTextField1)
+                    .addComponent(tfPassword)
+                    .addComponent(tfUsername)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
@@ -87,11 +109,11 @@ public class Login extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -106,6 +128,92 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         new SignUpPage().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JSONParser parser = new JSONParser();     //Try reading for Doctors
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray doctors = (JSONArray) jsonObject.get("doctors");
+            
+            
+            
+            for (int i = 0; i < doctors.size(); i++) {
+                JSONObject test = (JSONObject) doctors.get(i);
+                String username = test.get("username").toString();
+                System.out.println(username);
+                System.out.println(tfUsername.getText().toString());
+                if (username.equals(tfUsername.getText().toString()))
+                {
+                    String password = test.get("password").toString();
+                    System.out.println("1/2 complete.");
+                    if (password.equals(tfPassword.getText().toString()))
+                    {
+                        new DoctorDashboard().setVisible(true);
+                    }
+                }
+            }
+            
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray patients = (JSONArray) jsonObject.get("patients");
+            
+            
+            
+            for (int i = 0; i < patients.size(); i++) {
+                JSONObject test = (JSONObject) patients.get(i);
+                String username = test.get("username").toString();
+                System.out.println(username);
+                System.out.println(tfUsername.getText().toString());
+                if (username.equals(tfUsername.getText().toString()))
+                {
+                    String password = test.get("password").toString();
+                    System.out.println("1/2 complete.");
+                    if (password.equals(tfPassword.getText().toString()))
+                    {
+                        String firstname = test.get("firstname").toString();
+                        String surname = test.get("surname").toString();
+                        String text = firstname + " " + surname;
+                        String patient = test.get("username").toString();
+                        new PatientDashboard(text, username).setVisible(true);
+                        
+                    }
+                }
+            }
+            
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,10 +253,10 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField tfPassword;
+    private javax.swing.JFormattedTextField tfUsername;
     // End of variables declaration//GEN-END:variables
 }

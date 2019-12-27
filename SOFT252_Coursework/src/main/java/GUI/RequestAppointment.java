@@ -4,7 +4,16 @@
  * and open the template in the editor.
  */
 package GUI;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 /**
  *
  * @author Lewis
@@ -16,6 +25,7 @@ public class RequestAppointment extends javax.swing.JFrame {
      */
     public RequestAppointment() {
         initComponents();
+        fillComboBox();
     }
 
     /**
@@ -29,15 +39,15 @@ public class RequestAppointment extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        tfEarlyDate = new javax.swing.JTextField();
+        tfLatestDate = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        cbDocs = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,8 +55,6 @@ public class RequestAppointment extends javax.swing.JFrame {
         jLabel1.setText("Appointment Request Form");
 
         jLabel2.setText("Requested Doctor:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel3.setText("Earliest Date:");
 
@@ -56,20 +64,25 @@ public class RequestAppointment extends javax.swing.JFrame {
 
         jLabel6.setText("(DD/MM/YY)");
 
-        jTextField1.setText("DD/MM/YY");
+        tfEarlyDate.setText("DD/MM/YY");
 
-        jTextField2.setText("DD/MM/YY");
+        tfLatestDate.setText("DD/MM/YY");
 
         jButton1.setText("Cancel");
 
         jButton2.setText("Submit Request");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69))
             .addGroup(layout.createSequentialGroup()
@@ -77,22 +90,20 @@ public class RequestAppointment extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(28, 28, 28)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbDocs, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfLatestDate, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addGap(26, 26, 26)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tfEarlyDate, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel6)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(14, 14, 14)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -108,22 +119,22 @@ public class RequestAppointment extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbDocs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfEarlyDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfLatestDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(21, 21, 21))
+                .addGap(22, 22, 22))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(256, Short.MAX_VALUE)
@@ -133,6 +144,46 @@ public class RequestAppointment extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        //Checks here to ensure that there has been data chosen successfully.
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AppointmentRequests.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray requests = (JSONArray) jsonObject.get("Appointments");
+            JSONObject newAppointment = new JSONObject();
+            newAppointment.put("doctorname", cbDocs.getSelectedItem());
+            newAppointment.put("earliestdate", tfEarlyDate.getText());
+            newAppointment.put("latestdate", tfLatestDate.getText());
+            requests.add(newAppointment);
+            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AppointmentRequests.json");
+        try
+        {
+            String intro = ("{" + (char)34 + "Appointments" + (char)34) + ":";
+            JSONFile.write(intro + requests.toJSONString());
+        }
+        catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+        JSONFile.flush();
+        JSONFile.close();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,18 +219,44 @@ public class RequestAppointment extends javax.swing.JFrame {
             }
         });
     }
-
+public  void fillComboBox()
+{
+            JSONParser parser = new JSONParser(); 
+    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray doctors = (JSONArray) jsonObject.get("doctors");
+            for (int i = 0; i < doctors.size(); i++) {
+                JSONObject currentDoctor = (JSONObject) doctors.get(i);
+                String firstname = currentDoctor.get("firstname").toString();
+                String surname = currentDoctor.get("surname").toString();
+                cbDocs.addItem(firstname + " " + surname);
+            }
+        }
+    catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbDocs;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField tfEarlyDate;
+    private javax.swing.JTextField tfLatestDate;
     // End of variables declaration//GEN-END:variables
 }

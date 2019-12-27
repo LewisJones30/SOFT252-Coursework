@@ -14,8 +14,16 @@ public class PatientDashboard extends javax.swing.JFrame {
     /**
      * Creates new form PatientDashboard
      */
-    public PatientDashboard() {
+    public String text, patientID;
+    public PatientDashboard(String WelcomeText, String patient) {
+        text = "Welcome, " + WelcomeText;
         initComponents();
+        patientID = patient;
+        System.out.println(patientID);
+    }
+        public PatientDashboard() {
+        initComponents();
+        
     }
 
     /**
@@ -27,7 +35,7 @@ public class PatientDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -40,7 +48,7 @@ public class PatientDashboard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Welcome, <Patient Name>");
+        lblName.setText(text);
 
         jLabel2.setText("You are a Patient. You will have limited access.");
 
@@ -53,12 +61,22 @@ public class PatientDashboard extends javax.swing.JFrame {
         jButton4.setText("View latest Appointment");
 
         jButton5.setText("Request an Appointment");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Notifications: <NotifCount>");
 
         jButton6.setText("Check Notifications");
 
         jButton7.setText("View my History");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,7 +88,7 @@ public class PatientDashboard extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(121, 121, 121)
-                                .addComponent(jLabel1))
+                                .addComponent(lblName))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(88, 88, 88)
                                 .addComponent(jLabel2)))
@@ -106,7 +124,7 @@ public class PatientDashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblName)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
@@ -130,6 +148,17 @@ public class PatientDashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        new RequestAppointment().setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        
+        new PatientHistory(text, patientID).setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,7 +194,10 @@ public class PatientDashboard extends javax.swing.JFrame {
             }
         });
     }
-
+public void fillComboBox()
+{      
+    
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -174,8 +206,8 @@ public class PatientDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblName;
     // End of variables declaration//GEN-END:variables
 }

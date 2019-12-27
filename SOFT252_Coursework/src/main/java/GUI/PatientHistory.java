@@ -4,6 +4,15 @@
  * and open the template in the editor.
  */
 package GUI;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -14,8 +23,16 @@ public class PatientHistory extends javax.swing.JFrame {
     /**
      * Creates new form PatientHistory
      */
+    String text, patientID;
     public PatientHistory() {
         initComponents();
+    }
+    public PatientHistory(String WelcomeText, String PatientID) {
+        text = WelcomeText;
+        initComponents();
+        patientID = PatientID;
+        jLabel1.setText(text);
+        loadPatientHistory();
     }
 
     /**
@@ -28,33 +45,39 @@ public class PatientHistory extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tfRecords = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("<Patient Name>'s history");
 
-        jTextField1.setEnabled(false);
-
         jButton1.setText("Close");
+
+        jScrollPane1.setEnabled(false);
+
+        tfRecords.setColumns(20);
+        tfRecords.setRows(5);
+        jScrollPane1.setViewportView(tfRecords);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jLabel1)
-                .addContainerGap(110, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(331, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -62,9 +85,9 @@ public class PatientHistory extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -106,10 +129,42 @@ public class PatientHistory extends javax.swing.JFrame {
             }
         });
     }
+    public void loadPatientHistory()
+    {
+        JSONParser parser = new JSONParser();
+    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\PatientHistoryRecords.json")) 
+        {
+            
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray records = (JSONArray) jsonObject.get("PatientRecords");
+            for (int i = 0; i < records.size(); i++) {
+                JSONObject currentRecord = (JSONObject) records.get(i);
+                String currentPatient = currentRecord.get("patientID").toString();
+                if (currentPatient.equals(patientID))
+                {
+                    tfRecords.setText(currentRecord.get("Comment").toString());
+                }
+            }
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
 
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea tfRecords;
     // End of variables declaration//GEN-END:variables
 }
