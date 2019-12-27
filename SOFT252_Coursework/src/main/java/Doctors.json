@@ -1,0 +1,24 @@
+{"doctors":[
+    {
+    "firstname": "Eve",
+    "surname" : "Jeffery",
+    "address" : "2 Eastbourne Manor, Doctor Street, Plymouth, PL4 2AA",
+    "username" : "D101",
+    "password" : "beans"
+},
+    {
+    "firstname": "Kailan",
+    "surname" : "Redman",
+    "address" : "5 London House, Doctor Street, Plymouth, PL4 2AA",
+    "username" : "D101",
+    "password" : "beans"
+},
+    {
+    "firstname": "Wade",
+    "surname" : "McKinney",
+    "address" : "83 Cavern Cottage, Doctor Street, Plymouth, PL4 2AA",
+    "username" : "D101",
+    "password" : "beans"
+}]
+
+}
