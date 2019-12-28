@@ -5,6 +5,17 @@
  */
 package Secretary;
 
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+
 /**
  *
  * @author Lewis
@@ -16,6 +27,7 @@ public class AppointmentRequests extends javax.swing.JFrame {
      */
     public AppointmentRequests() {
         initComponents();
+        LoadRequests();
     }
 
     /**
@@ -28,8 +40,9 @@ public class AppointmentRequests extends javax.swing.JFrame {
     private void initComponents() {
 
         lblRequests = new javax.swing.JLabel();
-        tfRequests = new javax.swing.JTextField();
         btnClose = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taAppointments = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,21 +51,26 @@ public class AppointmentRequests extends javax.swing.JFrame {
 
         btnClose.setText("Close");
 
+        taAppointments.setColumns(20);
+        taAppointments.setRows(5);
+        jScrollPane1.setViewportView(taAppointments);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(lblRequests)
-                .addContainerGap(125, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfRequests)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnClose)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(331, Short.MAX_VALUE)
+                        .addComponent(btnClose))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(lblRequests)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -60,9 +78,9 @@ public class AppointmentRequests extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblRequests)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tfRequests, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClose)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -104,10 +122,46 @@ public class AppointmentRequests extends javax.swing.JFrame {
             }
         });
     }
+    public void LoadRequests()
+    {
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AppointmentRequests.json")) 
+        {
+            
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray appointments = (JSONArray) jsonObject.get("Appointments");
+            for (int i = 0; i < appointments.size(); i++) 
+            {
+                JSONObject currentAppointment = (JSONObject) appointments.get(i);
+                String doctorName = currentAppointment.get("doctorname").toString();
+                String earliestDate = currentAppointment.get("earliestdate").toString();
+                String latestDate = currentAppointment.get("latestdate").toString();
+                String PatientID = currentAppointment.get("PatientID").toString();
+                taAppointments.setText(taAppointments.getText() + "Doctor Name: " + doctorName + " Earliest Date: " + earliestDate +
+                " Latest date: " + latestDate +  " PatientID: " + PatientID + "\n");
+            }
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblRequests;
-    private javax.swing.JTextField tfRequests;
+    private javax.swing.JTextArea taAppointments;
     // End of variables declaration//GEN-END:variables
 }

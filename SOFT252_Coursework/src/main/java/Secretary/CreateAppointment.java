@@ -47,8 +47,6 @@ public class CreateAppointment extends javax.swing.JFrame {
 
         jLabel3.setText("Doctor chosen:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel4.setText("Date for Appointment:");
 
         jLabel5.setText("(DD/MM/YY)");

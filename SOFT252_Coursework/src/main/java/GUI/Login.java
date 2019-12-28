@@ -211,6 +211,92 @@ public String getloggedInId()
         {
             e.printStackTrace();
         }
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Admins.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray patients = (JSONArray) jsonObject.get("admins");
+            
+            
+            
+            for (int i = 0; i < patients.size(); i++) {
+                JSONObject test = (JSONObject) patients.get(i);
+                String username = test.get("username").toString();
+                System.out.println(username);
+                System.out.println(tfUsername.getText().toString());
+                if (username.equals(tfUsername.getText().toString()))
+                {
+                    String password = test.get("password").toString();
+                    System.out.println("1/2 complete.");
+                    if (password.equals(tfPassword.getText().toString()))
+                    {
+                        String firstname = test.get("firstname").toString();
+                        String surname = test.get("surname").toString();
+                        String text = firstname + " " + surname;
+                        String patient = test.get("username").toString();
+                        new AdminDashboard(text).setVisible(true);
+                        
+                    }
+                }
+            }
+            
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+        
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Secretaries.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray array = (JSONArray) jsonObject.get("secretaries");
+            
+            
+            
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject test = (JSONObject) array.get(i);
+                String username = test.get("username").toString();
+                System.out.println(username);
+                System.out.println(tfUsername.getText().toString());
+                if (username.equals(tfUsername.getText().toString()))
+                {
+                    String password = test.get("password").toString();
+                    System.out.println("1/2 complete.");
+                    if (password.equals(tfPassword.getText().toString()))
+                    {
+                        String firstname = test.get("firstname").toString();
+                        String surname = test.get("surname").toString();
+                        String text = firstname + " " + surname;
+                        String patient = test.get("username").toString();
+                        new SecretaryDashboard(text).setVisible(true);
+                    }
+                }
+            }
+            
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+        tfUsername.setText("");
+        tfPassword.setText("");
         
         
     }//GEN-LAST:event_jButton1ActionPerformed

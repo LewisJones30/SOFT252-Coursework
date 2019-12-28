@@ -38,6 +38,11 @@ public class AllDoctorRating extends javax.swing.JPanel {
         lblName.setText("Doctor's name:");
 
         btnDoctorNames.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        btnDoctorNames.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoctorNamesActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Average Rating given: <rating> stars");
 
@@ -84,6 +89,10 @@ public class AllDoctorRating extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDoctorNamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorNamesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDoctorNamesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

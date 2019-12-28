@@ -1,0 +1,14 @@
+{"admins":[ 
+        {
+            "username" : "A101",
+            "password" : "beans",
+            "firstname" : "Lewis",
+            "surname" : "Jones"
+        },
+        {
+            "username" : "A102",
+            "password" : "beans",
+            "firstname" : "Kevin",
+            "surname" : "Stevens"
+        } 
+]}

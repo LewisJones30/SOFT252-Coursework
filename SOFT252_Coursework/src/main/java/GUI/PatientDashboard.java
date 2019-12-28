@@ -55,6 +55,11 @@ public class PatientDashboard extends javax.swing.JFrame {
         jButton1.setText("Request Account Termination");
 
         jButton2.setText("Leave some feedback for my doctor");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("View my prescription");
 
@@ -151,7 +156,7 @@ public class PatientDashboard extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        new RequestAppointment().setVisible(true);
+        new RequestAppointment(patientID).setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -159,6 +164,12 @@ public class PatientDashboard extends javax.swing.JFrame {
         
         new PatientHistory(text, patientID).setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        new DoctorRating(patientID).setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -20,10 +20,17 @@ import java.io.FileWriter;
  */
 public class RequestAppointment extends javax.swing.JFrame {
 
+    String patientIDNum;
     /**
      * Creates new form RequestAppointment
      */
     public RequestAppointment() {
+        initComponents();
+        fillComboBox();
+    }
+    public RequestAppointment(String patientID)
+    {
+        patientIDNum = patientID;
         initComponents();
         fillComboBox();
     }
@@ -69,11 +76,22 @@ public class RequestAppointment extends javax.swing.JFrame {
         tfLatestDate.setText("DD/MM/YY");
 
         jButton1.setText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Submit Request");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        cbDocs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbDocsActionPerformed(evt);
             }
         });
 
@@ -157,12 +175,13 @@ public class RequestAppointment extends javax.swing.JFrame {
             newAppointment.put("doctorname", cbDocs.getSelectedItem());
             newAppointment.put("earliestdate", tfEarlyDate.getText());
             newAppointment.put("latestdate", tfLatestDate.getText());
+            newAppointment.put("PatientID", patientIDNum.toString());
             requests.add(newAppointment);
             FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AppointmentRequests.json");
         try
         {
             String intro = ("{" + (char)34 + "Appointments" + (char)34) + ":";
-            JSONFile.write(intro + requests.toJSONString());
+            JSONFile.write(intro + requests.toJSONString() + "}");
         }
         catch (IOException e)
                 {
@@ -184,6 +203,15 @@ public class RequestAppointment extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cbDocsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDocsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbDocsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,9 +247,9 @@ public class RequestAppointment extends javax.swing.JFrame {
             }
         });
     }
-public  void fillComboBox()
+public final  void fillComboBox()
 {
-            JSONParser parser = new JSONParser(); 
+    JSONParser parser = new JSONParser(); 
     try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
