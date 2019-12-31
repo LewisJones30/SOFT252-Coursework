@@ -44,12 +44,17 @@ public class AppointmentRequests extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         taAppointments = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Appointment Requests");
 
         lblRequests.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lblRequests.setText("Appointment Requests:");
 
         btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         taAppointments.setColumns(20);
         taAppointments.setRows(5);
@@ -87,6 +92,12 @@ public class AppointmentRequests extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new SecretaryDashboard().setVisible(true);
+    }//GEN-LAST:event_btnCloseActionPerformed
 
     /**
      * @param args the command line arguments

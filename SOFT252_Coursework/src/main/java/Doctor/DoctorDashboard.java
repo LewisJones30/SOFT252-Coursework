@@ -5,17 +5,43 @@
  */
 package Doctor;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import javax.swing.JOptionPane;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author Lewis
  */
 public class DoctorDashboard extends javax.swing.JFrame {
 
+    String Appointments;
+    public String DoctorID;
+    public String doctorName;
     /**
      * Creates new form DoctorDashboard
      */
-    public DoctorDashboard() {
+    public DoctorDashboard() { //Unused in program, default constructor incase any issues occur with passing variables.
         initComponents();
+    }
+    public DoctorDashboard(String doctorID, String doctorname) //Constructor used to pass the doctor's login to this window. Always called with login.
+    {
+        DoctorID = doctorID;
+        doctorName = doctorname;
+        initComponents();
+        lblDocName.setText("Welcome, " + doctorName);
+        //GetNotifications() //Call to get notifications
+        
+    }
+    public String getDoctorID()
+    {
+        return DoctorID;
     }
 
     /**
@@ -27,7 +53,7 @@ public class DoctorDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblDocName = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -35,18 +61,29 @@ public class DoctorDashboard extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Doctor Dashboard");
 
-        jLabel1.setText("Welcome, <Doctor Name>");
+        lblDocName.setText("Welcome, <Doctor Name>");
 
         jLabel2.setText("This is the Doctor's dashboard.");
 
-        jButton1.setText("View Appointments");
+        jButton1.setText("Inspect Patient History");
 
-        jButton2.setText("Inspect Patient History");
+        jButton2.setText("View Appointments");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Create a future appointment");
 
         jButton4.setText("Create a Prescription");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,27 +95,27 @@ public class DoctorDashboard extends javax.swing.JFrame {
                         .addGap(108, 108, 108)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1)))
+                            .addComponent(lblDocName)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
                             .addComponent(jButton2)
                             .addComponent(jButton3)
-                            .addComponent(jButton4))))
+                            .addComponent(jButton4)
+                            .addComponent(jButton1))))
                 .addContainerGap(144, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblDocName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
                 .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
@@ -88,6 +125,47 @@ public class DoctorDashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        new NewPrescription().setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Appointments = ""; //Reset the appointments as otherwise it will mass duplicate.
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\ScheduledAppointments.json")) 
+        {
+            //First, find the object
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray prescriptionsArray = (JSONArray) jsonObject.get("ScheduledAppointments"); //Find the array of requests
+            for (int i = 0; i < prescriptionsArray.size(); i++) {
+                JSONObject currentAppointment = (JSONObject) prescriptionsArray.get(i);
+                if (doctorName.equals(currentAppointment.get("DoctorName").toString()))
+                {
+                    Appointments = Appointments + "\n You have an appointment with:" + currentAppointment.get("PatientID") + " on " +
+                    currentAppointment.get("AppointmentDate") + ".";
+                }
+            }
+                    JOptionPane.showMessageDialog(null, "You have the following appointments: " + Appointments);
+                    System.out.println(Appointments);
+                    
+        }
+
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,7 +207,7 @@ public class DoctorDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblDocName;
     // End of variables declaration//GEN-END:variables
 }

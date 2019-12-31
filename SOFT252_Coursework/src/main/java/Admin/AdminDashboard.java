@@ -5,6 +5,8 @@
  */
 package Admin;
 
+import GUI.AllDoctorRating;
+
 /**
  *
  * @author Lewis
@@ -41,16 +43,27 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Administrator Dashboard");
 
         lblName.setText("Welcome, <Admin Name>");
 
         jLabel2.setText("This is the Administrator Dashboard.");
 
         jButton1.setText("Create a new Administrator");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Add or Remove Doctors/Secretaries");
 
         jButton3.setText("View Doctor Ratings");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Provide Feedback to Doctors");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -127,6 +140,16 @@ public class AdminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new provideFeedback().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new createAdmin().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new AllDoctorRating().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

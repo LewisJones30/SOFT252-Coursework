@@ -56,6 +56,8 @@ public class DoctorRating extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
 
+        setTitle("Doctor Rating");
+
         lblTitle.setText("Rate your Doctor and provide feedback.");
 
         lblStar.setText("Star rating for doctor:");

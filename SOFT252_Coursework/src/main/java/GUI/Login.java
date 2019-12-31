@@ -53,6 +53,7 @@ public String getloggedInId()
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -150,7 +151,10 @@ public String getloggedInId()
                     System.out.println("1/2 complete.");
                     if (password.equals(tfPassword.getText().toString()))
                     {
-                        new DoctorDashboard().setVisible(true);
+                        String Name = test.get("firstname") + " " + test.get("surname");
+                        String doctorID = test.get("username").toString();
+                        new DoctorDashboard(doctorID, Name).setVisible(true);
+                        this.setVisible(false);
                     }
                 }
             }
@@ -192,6 +196,7 @@ public String getloggedInId()
                         String text = firstname + " " + surname;
                         String patient = test.get("username").toString();
                         new PatientDashboard(text, username).setVisible(true);
+                        this.setVisible(false);
                         
                     }
                 }
@@ -234,6 +239,7 @@ public String getloggedInId()
                         String text = firstname + " " + surname;
                         String patient = test.get("username").toString();
                         new AdminDashboard(text).setVisible(true);
+                        this.setVisible(false);
                         
                     }
                 }
@@ -277,6 +283,7 @@ public String getloggedInId()
                         String text = firstname + " " + surname;
                         String patient = test.get("username").toString();
                         new SecretaryDashboard(text).setVisible(true);
+                        this.setVisible(false);
                     }
                 }
             }

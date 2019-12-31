@@ -5,6 +5,15 @@
  */
 package GUI;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author Lewis
@@ -16,6 +25,7 @@ public class AllDoctorRating extends javax.swing.JPanel {
      */
     public AllDoctorRating() {
         initComponents();
+        getDoctors();
     }
 
     /**
@@ -29,24 +39,30 @@ public class AllDoctorRating extends javax.swing.JPanel {
 
         lblTitle = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
-        btnDoctorNames = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
+        cbDocs = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taPatientFeedback = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
+        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblTitle.setText("Here you are able to choose the doctors to see their ratings:");
 
         lblName.setText("Doctor's name:");
 
-        btnDoctorNames.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        btnDoctorNames.addActionListener(new java.awt.event.ActionListener() {
+        cbDocs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDoctorNamesActionPerformed(evt);
+                cbDocsActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Average Rating given: <rating> stars");
-
         jButton1.setText("Back");
+
+        taPatientFeedback.setColumns(20);
+        taPatientFeedback.setRows(5);
+        jScrollPane1.setViewportView(taPatientFeedback);
+
+        jLabel1.setText("Feedback given by other patients for this doctor:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -54,52 +70,116 @@ public class AllDoctorRating extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblName)
                                         .addGap(35, 35, 35)
-                                        .addComponent(btnDoctorNames, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel3)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(lblTitle)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                                        .addComponent(cbDocs, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel1))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(lblTitle)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(24, 24, 24)
                 .addComponent(lblTitle)
-                .addGap(40, 40, 40)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblName)
-                    .addComponent(btnDoctorNames, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbDocs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDoctorNamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorNamesActionPerformed
+    private void cbDocsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDocsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnDoctorNamesActionPerformed
+        taPatientFeedback.setText("");
+        JSONParser parser = new JSONParser();
+try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\DoctorFeedback.json")) 
+        {
+            
+JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray feedback = (JSONArray) jsonObject.get("DoctorFeedback");
+            for (int i = 0; i < feedback.size(); i++) {
+                JSONObject currentFeedback = (JSONObject) feedback.get(i);
+                String doctorName = currentFeedback.get("DoctorName").toString();
+                if (doctorName.equals(cbDocs.getSelectedItem().toString()))
+                {
+                    taPatientFeedback.setText(taPatientFeedback.getText() + "\n" + currentFeedback.get("feedbackGiven"));
+                }
+            }
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cbDocsActionPerformed
+
+public void getDoctors()
+    {
+        JSONParser parser = new JSONParser(); 
+    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray doctors = (JSONArray) jsonObject.get("doctors");
+            for (int i = 0; i < doctors.size(); i++) {
+                JSONObject currentDoctor = (JSONObject) doctors.get(i);
+                String firstname = currentDoctor.get("firstname").toString();
+                String surname = currentDoctor.get("surname").toString();
+                cbDocs.addItem(firstname + " " + surname);
+            }
+        }
+     catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> btnDoctorNames;
+    private javax.swing.JComboBox<String> cbDocs;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JTextArea taPatientFeedback;
     // End of variables declaration//GEN-END:variables
 }

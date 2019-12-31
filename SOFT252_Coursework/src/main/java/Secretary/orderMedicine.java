@@ -5,6 +5,17 @@
  */
 package Secretary;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Lewis
@@ -16,6 +27,7 @@ public class orderMedicine extends javax.swing.JFrame {
      */
     public orderMedicine() {
         initComponents();
+        fillMedicines();
     }
 
     /**
@@ -29,16 +41,16 @@ public class orderMedicine extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbMedicines = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        tfQuantity = new javax.swing.JTextField();
+        chbMedicines = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tfNewMeds = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Order new medicines");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("Order new Medicine");
@@ -46,30 +58,41 @@ public class orderMedicine extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Medicine to order:");
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        cbMedicines.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Quantity Required:");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tfQuantity.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jCheckBox1.setText("New Medicine?");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        chbMedicines.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        chbMedicines.setText("New Medicine?");
+        chbMedicines.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                chbMedicinesActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("New Medicine name:");
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextField2.setText("N/A");
+        tfNewMeds.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tfNewMeds.setText("N/A");
+        tfNewMeds.setEnabled(false);
 
         jButton1.setText("Order Medicine");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Close Window");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,7 +107,7 @@ public class orderMedicine extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addComponent(jCheckBox1))
+                                        .addComponent(chbMedicines))
                                     .addComponent(jLabel1)))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
@@ -92,7 +115,7 @@ public class orderMedicine extends javax.swing.JFrame {
                                     .addComponent(jButton1)
                                     .addComponent(jLabel4))
                                 .addGap(43, 43, 43)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(tfNewMeds, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -100,13 +123,13 @@ public class orderMedicine extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cbMedicines, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton2)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(tfQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,19 +138,19 @@ public class orderMedicine extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(chbMedicines)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfNewMeds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbMedicines, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -138,9 +161,90 @@ public class orderMedicine extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void chbMedicinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbMedicinesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+        if (chbMedicines.isSelected() == true)
+        {
+            tfNewMeds.setEnabled(true);
+            cbMedicines.setEnabled(false);
+        }
+        else
+        {
+            tfNewMeds.setEnabled(false);
+            cbMedicines.setEnabled(true);
+        }
+    }//GEN-LAST:event_chbMedicinesActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if (chbMedicines.isSelected() == true)
+        {
+            JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json")) 
+        {
+            
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray medicines = (JSONArray) jsonObject.get("medicines");
+            if (chbMedicines.isSelected() == false)
+            {
+                for (int i = 0; i < medicines.size(); i++) {
+                JSONObject currentMed = (JSONObject) medicines.get(i);
+                if (currentMed.get("name").toString().equals(cbMedicines))
+                {
+                    int startingQuantity = Integer.parseInt(currentMed.get("quantity").toString());
+                    currentMed.put("name", cbMedicines);
+                    currentMed.put("quantity", startingQuantity + Integer.parseInt(tfQuantity.getText()));
+                }
+                }
+                
+            }
+            else
+            {
+                     JSONObject newMedicine = new JSONObject();
+            newMedicine.put("name", tfNewMeds.getText());
+            newMedicine.put("quantity", tfQuantity.getText());
+            medicines.add(newMedicine);
+            }
+            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json");
+                    try
+                    {
+                        String intro = ("{" + (char)34 + "medicines" + (char)34) + ":";
+                        JSONFile.write(intro + medicines.toJSONString() + "}");
+                    }
+                    catch (IOException e)
+                            {
+                                e.printStackTrace();
+                            }
+            JSONFile.flush();
+            JSONFile.close();
+            JOptionPane.showMessageDialog(null, "Medicines have been ordered and stocked.");
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+
+        }
+        else
+        {
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new SecretaryDashboard().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,17 +280,45 @@ public class orderMedicine extends javax.swing.JFrame {
             }
         });
     }
+    private void fillMedicines()
+    {
+        JSONParser parser = new JSONParser();
+try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json")) 
+        {
+            
+JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray medicines = (JSONArray) jsonObject.get("medicines");
+            for (int i = 0; i < medicines.size(); i++) {
+                JSONObject currentMedicine = (JSONObject) medicines.get(i);
+                cbMedicines.addItem(currentMedicine.get("name").toString());
+            }
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbMedicines;
+    private javax.swing.JCheckBox chbMedicines;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField tfNewMeds;
+    private javax.swing.JTextField tfQuantity;
     // End of variables declaration//GEN-END:variables
 }

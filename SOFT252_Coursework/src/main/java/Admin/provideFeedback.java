@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 /**
  *
  * @author Lewis
@@ -46,9 +47,9 @@ public class provideFeedback extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         taPatientFeedback = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        taFeedback = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Provide Feedback");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Provide feedback to a specific doctor");
@@ -68,6 +69,11 @@ public class provideFeedback extends javax.swing.JFrame {
         jLabel4.setText("Feedback to be given to doctor...");
 
         jButton1.setText("Send Feedback");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Close Window");
 
@@ -75,9 +81,9 @@ public class provideFeedback extends javax.swing.JFrame {
         taPatientFeedback.setRows(5);
         jScrollPane1.setViewportView(taPatientFeedback);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        taFeedback.setColumns(20);
+        taFeedback.setRows(5);
+        jScrollPane2.setViewportView(taFeedback);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,6 +178,39 @@ JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON obje
 
     }//GEN-LAST:event_cbDocsActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String comment = taFeedback.getText();
+        String doctorName = cbDocs.getSelectedItem().toString();
+        JSONParser parser = new JSONParser(); 
+        JSONObject newComment = new JSONObject();
+        newComment.put("DoctorName", doctorName);
+        newComment.put("Comment", comment);
+        
+    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\DoctorFeedback.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray feedbackArray = (JSONArray) jsonObject.get("doctorFeedback");
+            feedbackArray.add(newComment);
+            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\DoctorFeedback.json");
+            String intro = ("{" + (char)34 + "DoctorFeedback" + (char)34) + ":";
+            JSONFile.write(intro + feedbackArray.toJSONString() + "}");
+            JSONFile.flush();
+            JSONFile.close();
+    }//GEN-LAST:event_jButton1ActionPerformed
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -246,7 +285,7 @@ JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON obje
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea taFeedback;
     private javax.swing.JTextArea taPatientFeedback;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,17 +5,35 @@
  */
 package Doctor;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import javax.swing.JOptionPane;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author Lewis
  */
 public class NewPrescription extends javax.swing.JFrame {
 
+    public String DoctorID;
     /**
      * Creates new form NewPrescription
      */
     public NewPrescription() {
         initComponents();
+        fillMedicines();
+        fillPatients();
+    }
+    public NewPrescription(String doctorID)
+    {
+        DoctorID = doctorID;
     }
 
     /**
@@ -29,47 +47,48 @@ public class NewPrescription extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbPatientNumber = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbMedicines = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tfQuantity = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taDosage = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Create Prescription");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("Create a Prescription for a patient");
 
         jLabel2.setText("Patient Identification Number:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbPatientNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPatientNumberActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Medicine to be prescribed:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel4.setText("Quantity:");
-
-        jTextField1.setText("jTextField1");
 
         jLabel5.setText("Dosage Requirements:");
 
-        jTextField2.setText("jTextField1");
-
         jButton1.setText("Close Window");
 
-        jCheckBox1.setText("New Medicine Required?");
-
         jButton2.setText("Create Prescription");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jTextField3.setText("New Medicine Name");
-        jTextField3.setEnabled(false);
+        taDosage.setColumns(20);
+        taDosage.setRows(5);
+        jScrollPane1.setViewportView(taDosage);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,9 +103,12 @@ public class NewPrescription extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jCheckBox1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,21 +119,14 @@ public class NewPrescription extends javax.swing.JFrame {
                                             .addComponent(jLabel3)
                                             .addGap(54, 54, 54)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel4))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLabel5)
+                                        .addGap(71, 71, 71)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbPatientNumber, 0, 302, Short.MAX_VALUE)
+                                    .addComponent(cbMedicines, 0, 302, Short.MAX_VALUE)
+                                    .addComponent(tfQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1))))))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,24 +136,24 @@ public class NewPrescription extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbPatientNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cbMedicines, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -148,6 +163,140 @@ public class NewPrescription extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void fillPatients(){
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json")) 
+        {
+            
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray patients = (JSONArray) jsonObject.get("patients");
+            for (int i = 0; i < patients.size(); i++) {
+                JSONObject currentPatient = (JSONObject) patients.get(i);
+                String patientID = currentPatient.get("username").toString();
+                cbPatientNumber.addItem(patientID);
+            }
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+
+    }
+    private void cbPatientNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPatientNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbPatientNumberActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        boolean prescriptionAllowed = checkPrescription();
+        if (prescriptionAllowed == true)
+        {
+                   WritePrescriptionToFile(); 
+                   JOptionPane.showMessageDialog(null, "Prescription has been successfully dispensed to the patient.");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "The prescription has not been written because there is an error with the prescription");
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private boolean checkPrescription()
+    {
+        JSONParser parser = new JSONParser();
+
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray allMedicines = (JSONArray) jsonObject.get("medicines");
+            for (int i = 0; i < allMedicines.size(); i++) {
+                JSONObject currentMed = (JSONObject) allMedicines.get(i);
+                if (currentMed.get("name").equals(cbMedicines.getSelectedItem().toString()))
+                {
+                    int stock= (Integer.parseInt(currentMed.get("quantity").toString()));
+                    int prescribed = Integer.parseInt(tfQuantity.getText());
+                    if (stock - prescribed > -1)
+                    {
+                        currentMed.put("quantity", stock - prescribed);
+                        FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json");
+                        String intro = ("{" + (char)34 + "medicines" + (char)34) + ":";
+                        JSONFile.write(intro + allMedicines.toJSONString() + "}");  
+                        JSONFile.flush();
+                        JSONFile.close();
+                        return true;
+
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "There is not enough of the prescribed medicine available. Please request more.");
+                        return false;
+                    }
+                }
+                else
+                {
+                    
+                }
+                
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    private void WritePrescriptionToFile()
+    {
+        JSONObject newPrescription = new JSONObject();
+        newPrescription.put("PatientID", cbPatientNumber.getSelectedItem());
+        newPrescription.put("MedicineName", cbMedicines.getSelectedItem());
+        newPrescription.put("Quantity", tfQuantity.getText());
+        newPrescription.put("Comment", taDosage.getText());
+        newPrescription.put("DoctorID", GetDoctorID());
+        JSONParser parser = new JSONParser();
+
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Prescriptions.json")) 
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray allPrescriptions = (JSONArray) jsonObject.get("Prescriptions");
+            allPrescriptions.add(newPrescription);
+            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Prescriptions.json");
+            String intro = ("{" + (char)34 + "Prescriptions" + (char)34) + ":";
+            JSONFile.write(intro + allPrescriptions.toJSONString() + "}");  
+            JSONFile.flush();
+            JSONFile.close();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+        
     /**
      * @param args the command line arguments
      */
@@ -182,20 +331,50 @@ public class NewPrescription extends javax.swing.JFrame {
             }
         });
     }
-
+     private void fillMedicines()
+    {
+        JSONParser parser = new JSONParser();
+try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json")) 
+        {
+            
+JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray medicines = (JSONArray) jsonObject.get("medicines");
+            for (int i = 0; i < medicines.size(); i++) {
+                JSONObject currentMedicine = (JSONObject) medicines.get(i);
+                cbMedicines.addItem(currentMedicine.get("name").toString());
+            }
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+    
+    }
+public String GetDoctorID()
+{
+    return DoctorID;
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbMedicines;
+    private javax.swing.JComboBox<String> cbPatientNumber;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea taDosage;
+    private javax.swing.JTextField tfQuantity;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,24 +5,41 @@
  */
 package GUI;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Lewis
  */
+import javax.swing.JOptionPane;
 public class PatientDashboard extends javax.swing.JFrame {
 
     /**
      * Creates new form PatientDashboard
      */
     public String text, patientID;
+    public String Appointments, Prescription;
     public PatientDashboard(String WelcomeText, String patient) {
         text = "Welcome, " + WelcomeText;
         initComponents();
         patientID = patient;
         System.out.println(patientID);
+                findAppointments();
+        
     }
         public PatientDashboard() {
         initComponents();
+        findAppointments();
         
     }
 
@@ -45,14 +62,21 @@ public class PatientDashboard extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        btnFeedback = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Patient Dashboard");
 
         lblName.setText(text);
 
         jLabel2.setText("You are a Patient. You will have limited access.");
 
         jButton1.setText("Request Account Termination");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Leave some feedback for my doctor");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -62,8 +86,18 @@ public class PatientDashboard extends javax.swing.JFrame {
         });
 
         jButton3.setText("View my prescription");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("View latest Appointment");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Request an Appointment");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -76,10 +110,17 @@ public class PatientDashboard extends javax.swing.JFrame {
 
         jButton6.setText("Check Notifications");
 
-        jButton7.setText("View my History");
+        jButton7.setText("View my history");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
+            }
+        });
+
+        btnFeedback.setText("View doctor feedback");
+        btnFeedback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFeedbackActionPerformed(evt);
             }
         });
 
@@ -90,40 +131,39 @@ public class PatientDashboard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(121, 121, 121)
-                                .addComponent(lblName))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(88, 88, 88)
-                                .addComponent(jLabel2)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(76, 76, 76))
+                        .addGap(121, 121, 121)
+                        .addComponent(lblName))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(76, 76, 76))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton6)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnFeedback))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                                 .addComponent(jButton1))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3)
-                                .addGap(19, 19, 19))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton6)
-                                .addGap(27, 27, 27)))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addComponent(jButton7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButton3)))
+                        .addGap(19, 19, 19))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,9 +172,11 @@ public class PatientDashboard extends javax.swing.JFrame {
                 .addComponent(lblName)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton7)
-                .addGap(19, 19, 19)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton7)
+                    .addComponent(btnFeedback))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
                     .addComponent(jButton1))
@@ -171,6 +213,160 @@ public class PatientDashboard extends javax.swing.JFrame {
         new DoctorRating(patientID).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you wish to request account termination?");
+        if (dialogResult == JOptionPane.YES_OPTION)
+        {
+            sendTerminationRequest();
+            JOptionPane.showMessageDialog(null, "Your account termination request has been successfully recieved.");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        findPrescription();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        if (Appointments != null)
+        {
+            JOptionPane.showMessageDialog(null, Appointments);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No appointments to show.");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFeedbackActionPerformed
+        // TODO add your handling code here:
+        new AllDoctorRating().setVisible(true);
+        
+    }//GEN-LAST:event_btnFeedbackActionPerformed
+
+    private void findPrescription()
+    {
+        String data = "";
+        boolean prescriptionFound = false;
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Prescriptions.json")) 
+        {
+            //First, find the object
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray prescriptionsArray = (JSONArray) jsonObject.get("Prescriptions"); //Find the array of requests
+            for (int i = 0; i < prescriptionsArray.size(); i++) {
+                JSONObject currentPrescription = (JSONObject) prescriptionsArray.get(i);
+                if (patientID.equals(currentPrescription.get("PatientID").toString()))
+                {
+                    data = "Your current prescription is: " + currentPrescription.get("MedicineName") + ". Quantity of " + 
+                            currentPrescription.get("Quantity") + " with dosage requirements of: " + 
+                            currentPrescription.get("Comment");
+                    System.out.println("Data" + data);
+                    prescriptionFound = true;
+                }
+            }
+            
+   
+        if (prescriptionFound = true)
+        {
+            JOptionPane.showMessageDialog(null, data);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "We are unable to find your current prescription.");
+        }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+
+    }
+    private void findAppointments()
+    {
+                boolean prescriptionFound = false;
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\ScheduledAppointments.json")) 
+        {
+            //First, find the object
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray prescriptionsArray = (JSONArray) jsonObject.get("ScheduledAppointments"); //Find the array of requests
+            for (int i = 0; i < prescriptionsArray.size(); i++) {
+                JSONObject currentAppointment = (JSONObject) prescriptionsArray.get(i);
+                if (patientID.equals(currentAppointment.get("PatientID").toString()))
+                {
+                    Appointments = Appointments + "\n You have an appointment with:" + currentAppointment.get("DoctorName") + " on " +
+                    currentAppointment.get("AppointmentDate") + ".";
+                    prescriptionFound = true;
+                }
+            }
+                    System.out.println(Appointments);
+        }
+
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+    private void sendTerminationRequest(){
+        JSONObject patientTermination = new JSONObject();
+        patientTermination.put("patientID", patientID);
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AccountTermination.json")) 
+        {
+            //First, find the object
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray requestsArray = (JSONArray) jsonObject.get("requests"); //Find the array of requests
+            requestsArray.add(patientTermination); //Insert the new request at the end of the sequence
+            //Write to the JSON file:
+             FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AccountTermination.json");
+                    try
+                    {
+                        String intro = ("{" + (char)34 + "requests" + (char)34) + ":";
+                        JSONFile.write(intro + requestsArray.toJSONString() + "}");
+                    }
+                    catch (IOException e)
+                            {
+                                e.printStackTrace();
+                            }
+            JSONFile.flush();
+            JSONFile.close();
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+
+        
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -210,6 +406,7 @@ public void fillComboBox()
     
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFeedback;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

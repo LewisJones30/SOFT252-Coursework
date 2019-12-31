@@ -49,7 +49,7 @@ public class PatientHistory extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tfRecords = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Patient History");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("<Patient Name>'s history");

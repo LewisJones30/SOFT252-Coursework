@@ -1,14 +1,1 @@
-{"admins":[ 
-        {
-            "username" : "A101",
-            "password" : "beans",
-            "firstname" : "Lewis",
-            "surname" : "Jones"
-        },
-        {
-            "username" : "A102",
-            "password" : "beans",
-            "firstname" : "Kevin",
-            "surname" : "Stevens"
-        } 
-]}
+{"admins":[{"firstname":"Lewis","password":"beans","surname":"Jones","username":"A101"},{"firstname":"Bob","password":"beans","surname":"Stevens","username":"A102"}]}
