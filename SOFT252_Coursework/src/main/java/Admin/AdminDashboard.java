@@ -57,6 +57,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
 
         jButton2.setText("Add or Remove Doctors/Secretaries");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("View Doctor Ratings");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +155,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new AllDoctorRating().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new ModifyDoctorsSecretaries().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
