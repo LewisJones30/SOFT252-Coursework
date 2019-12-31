@@ -132,7 +132,7 @@ public class PatientHistory extends javax.swing.JFrame {
     public void loadPatientHistory()
     {
         JSONParser parser = new JSONParser();
-    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\PatientHistoryRecords.json")) 
+    try (Reader reader = new FileReader("src/main/java/JSON/PatientHistoryRecords.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object

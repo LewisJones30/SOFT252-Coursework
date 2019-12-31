@@ -114,7 +114,7 @@ public class AllDoctorRating extends javax.swing.JPanel {
         // TODO add your handling code here:
         taPatientFeedback.setText("");
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\DoctorFeedback.json")) 
+try (Reader reader = new FileReader("src/main/java/DoctorFeedback.json")) 
         {
             
 JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -146,7 +146,7 @@ JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON obje
 public void getDoctors()
     {
         JSONParser parser = new JSONParser(); 
-    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json")) 
+    try (Reader reader = new FileReader("src/main/java/JSON/Doctors.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray doctors = (JSONArray) jsonObject.get("doctors");

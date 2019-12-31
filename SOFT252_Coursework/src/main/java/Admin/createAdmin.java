@@ -155,7 +155,7 @@ public class createAdmin extends javax.swing.JFrame {
         if (a == tfUser.getText().charAt(0))
         {
             JSONParser parser = new JSONParser();
-            try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Admins.json"))
+            try (Reader reader = new FileReader("src/main/java/JSON/Admins.json"))
             {
                 
                 JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -166,7 +166,7 @@ public class createAdmin extends javax.swing.JFrame {
                 newAdmin.put("username", tfUser.getText());
                 newAdmin.put("password", tfPass.getText());
                 admins.add(newAdmin);
-                FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Admins.json");
+                FileWriter JSONFile = new FileWriter("src/main/java/JSON/Admins.json");
                 try
                 {
                     String intro = ("{" + (char)34 + "admins" + (char)34) + ":";

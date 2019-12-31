@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author ljones30
@@ -133,7 +134,7 @@ public String getloggedInId()
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         JSONParser parser = new JSONParser();     //Try reading for Doctors
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Doctors.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray doctors = (JSONArray) jsonObject.get("doctors");
@@ -155,6 +156,7 @@ public String getloggedInId()
                         String doctorID = test.get("username").toString();
                         new DoctorDashboard(doctorID, Name).setVisible(true);
                         this.setVisible(false);
+                        return;
                     }
                 }
             }
@@ -173,7 +175,7 @@ public String getloggedInId()
         {
             e.printStackTrace();
         }
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray patients = (JSONArray) jsonObject.get("patients");
@@ -197,6 +199,7 @@ public String getloggedInId()
                         String patient = test.get("username").toString();
                         new PatientDashboard(text, username).setVisible(true);
                         this.setVisible(false);
+                        return;
                         
                     }
                 }
@@ -216,7 +219,7 @@ public String getloggedInId()
         {
             e.printStackTrace();
         }
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Admins.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Admins.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray patients = (JSONArray) jsonObject.get("admins");
@@ -240,6 +243,7 @@ public String getloggedInId()
                         String patient = test.get("username").toString();
                         new AdminDashboard(text).setVisible(true);
                         this.setVisible(false);
+                        return;
                         
                     }
                 }
@@ -260,7 +264,7 @@ public String getloggedInId()
             e.printStackTrace();
         }
         
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Secretaries.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Secretaries.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray array = (JSONArray) jsonObject.get("secretaries");
@@ -284,6 +288,7 @@ public String getloggedInId()
                         String patient = test.get("username").toString();
                         new SecretaryDashboard(text).setVisible(true);
                         this.setVisible(false);
+                        return;
                     }
                 }
             }
@@ -302,6 +307,7 @@ public String getloggedInId()
         {
             e.printStackTrace();
         }
+        JOptionPane.showMessageDialog(null, "The username and/or password you have entered is incorrect.");
         tfUsername.setText("");
         tfPassword.setText("");
         

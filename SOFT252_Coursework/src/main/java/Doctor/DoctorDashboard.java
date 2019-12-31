@@ -135,7 +135,7 @@ public class DoctorDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         Appointments = ""; //Reset the appointments as otherwise it will mass duplicate.
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\ScheduledAppointments.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/ScheduledAppointments.json")) 
         {
             //First, find the object
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object

@@ -78,8 +78,6 @@ public class NewPatients extends javax.swing.JFrame implements IPatient {
         jLabel4 = new javax.swing.JLabel();
         tfID = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setText("New patients");
 
         cbPatients.addActionListener(new java.awt.event.ActionListener() {
@@ -248,7 +246,7 @@ public class NewPatients extends javax.swing.JFrame implements IPatient {
     private void updatePatients()
     {
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\NewPatients.json")) 
+try (Reader reader = new FileReader("src/main/java/JSON/NewPatients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -287,7 +285,7 @@ try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT25
     private void LoadPatients()
     {
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\NewPatients.json")) 
+try (Reader reader = new FileReader("src/main/java/NewPatients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -323,13 +321,13 @@ try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT25
         approvedPatient.put("username", "P" + tfID.getText());
         approvedPatient.put("password", "password");
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json")) 
+try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray newPatientsArray = (JSONArray) jsonObject.get("patients");
             newPatientsArray.add(approvedPatient);
-            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json");
+            FileWriter JSONFile = new FileWriter("src/main/java/JSON/Patients.json");
             String intro = ("{" + (char)34 + "patients" + (char)34) + ":";
             JSONFile.write(intro + newPatientsArray.toJSONString() + "}");
             JSONFile.flush();

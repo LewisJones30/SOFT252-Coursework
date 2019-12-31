@@ -251,7 +251,7 @@ public class PatientDashboard extends javax.swing.JFrame {
         String data = "";
         boolean prescriptionFound = false;
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Prescriptions.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Prescriptions.json")) 
         {
             //First, find the object
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -296,7 +296,7 @@ public class PatientDashboard extends javax.swing.JFrame {
     {
                 boolean prescriptionFound = false;
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\ScheduledAppointments.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/ScheduledAppointments.json")) 
         {
             //First, find the object
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -330,14 +330,14 @@ public class PatientDashboard extends javax.swing.JFrame {
         JSONObject patientTermination = new JSONObject();
         patientTermination.put("patientID", patientID);
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AccountTermination.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/AccountTermination.json")) 
         {
             //First, find the object
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray requestsArray = (JSONArray) jsonObject.get("requests"); //Find the array of requests
             requestsArray.add(patientTermination); //Insert the new request at the end of the sequence
             //Write to the JSON file:
-             FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AccountTermination.json");
+             FileWriter JSONFile = new FileWriter("src/main/java/JSON/AccountTermination.json");
                     try
                     {
                         String intro = ("{" + (char)34 + "requests" + (char)34) + ":";

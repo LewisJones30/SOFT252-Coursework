@@ -19,7 +19,8 @@ import java.io.FileWriter;
  *
  * @author Lewis
  */
-public class CreateAppointment extends javax.swing.JFrame {
+public class CreateAppointment extends javax.swing.JFrame
+{
 
     /**
      * Creates new form CreateAppointment
@@ -141,7 +142,7 @@ public class CreateAppointment extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\ScheduledAppointments.json")) 
+try (Reader reader = new FileReader("src/main/java/JSON/ScheduledAppointments.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -151,7 +152,7 @@ try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT25
             newAppointment.put("PatientID", tfID.getText());
             newAppointment.put("AppointmentDate", tfDate.getText());
             ScheduledAppointments.add(newAppointment);
-            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\ScheduledAppointments.json");
+            FileWriter JSONFile = new FileWriter("src/main/java/JSON/ScheduledAppointments.json");
             try
             {
                 String intro = ("{" + (char)34 + "ScheduledAppointments" + (char)34) + ":";
@@ -221,7 +222,7 @@ try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT25
      public void fillDoctors()
     {
                 JSONParser parser = new JSONParser(); 
-    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json")) 
+    try (Reader reader = new FileReader("src/main/java/JSON/Doctors.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray doctors = (JSONArray) jsonObject.get("doctors");

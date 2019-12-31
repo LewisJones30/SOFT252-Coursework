@@ -175,7 +175,7 @@ public class patientManagement extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -190,7 +190,7 @@ public class patientManagement extends javax.swing.JFrame {
                     currentPatient.put("address", tfAddress.getText());
                 }
             }
-        FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json");
+        FileWriter JSONFile = new FileWriter("src/main/java/JSON/Patients.json");
         try
         {
             String intro = ("{" + (char)34 + "patients" + (char)34) + ":";
@@ -231,7 +231,7 @@ public class patientManagement extends javax.swing.JFrame {
         if (dialogResult == JOptionPane.YES_OPTION)
         {
            JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -244,7 +244,7 @@ public class patientManagement extends javax.swing.JFrame {
                     patients.remove(i);
                 }
             }
-            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json");
+            FileWriter JSONFile = new FileWriter("src/main/java/JSON/Patients.json");
         try
         {
             String intro = ("{" + (char)34 + "patients" + (char)34) + ":";
@@ -280,7 +280,7 @@ public void UpdateTextFields()
     System.out.println("Updating...");
     System.out.println(cbPatients.getSelectedItem());
     JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -346,7 +346,7 @@ public void UpdateTextFields()
     }
     public void fillPatients(){
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object

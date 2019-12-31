@@ -33,8 +33,8 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
     
     private void fillDoctorsSecretaries()
     {
-      fillComboBox("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json", "doctors");
-      fillComboBox("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Secretaries.json", "secretaries");
+      fillComboBox("src/main/java/JSON/doctors.json", "doctors");
+      fillComboBox("src/main/java/JSON/Secretaries.json", "secretaries");
         
     }
     private void fillComboBox(String fileLocation, String arrayName)
@@ -94,8 +94,6 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         tfPassword = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Add or Remove Doctor/Secretaries");
@@ -239,18 +237,19 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if (chbSec.isSelected() == true && chbDoc.isSelected() == true)
+        //This code determines where to write the new user to
+        if (chbSec.isSelected() == true && chbDoc.isSelected() == true) //Both new doctor and new secretary are chosen
         {
             JOptionPane.showMessageDialog(null, "You have selected both a new doctor and secretary. Please amend this.");
         }
-        else if (chbSec.isSelected() == true)
+        else if (chbSec.isSelected() == true) //new secretary is chosen
         {
             char s = 'S';
             if (tfUsername.getText().charAt(0) == s) //Initial check to ensure that the first letter of the username is consistent.
             {
                 //Check that all boxes have been filled
                 if (!tfFName.getText().equals("") && !tfLName.getText().equals("") &&
-                        !tfAddress.getText().equals("") && !tfPassword.getText().equals(""))
+                        !tfAddress.getText().equals("") && !tfPassword.getText().equals("")) //Ensure there is data in every text box
                 {
                     JSONObject newSecretary = new JSONObject();
                     newSecretary.put("firstname", tfFName.getText());
@@ -258,7 +257,7 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
                     newSecretary.put("address", tfAddress.getText());
                     newSecretary.put("username", tfUsername.getText());
                     newSecretary.put("password", tfPassword.getText());
-                    addNewSecretary(newSecretary); //Run method to add a new secretary
+                    addNewPerson(newSecretary, "src/main/java/JSON/Secretaries.json", ""); //Run method to add a new secretary
                 }
                 else
                 {
@@ -271,13 +270,13 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
             }
             //Add new secretary
         }
-        else if (chbDoc.isSelected() == true)
+        else if (chbDoc.isSelected() == true) //new doctor has been selected
         {
             char D = 'D';
             if (tfUsername.getText().charAt(0) == D)
             {
                  if (!tfFName.getText().equals("") && !tfLName.getText().equals("") &&
-                        !tfAddress.getText().equals("") && !tfPassword.getText().equals(""))
+                        !tfAddress.getText().equals("") && !tfPassword.getText().equals("")) //check all boxes have data
                 {
                     JSONObject newDoctor = new JSONObject();
                     newDoctor.put("firstname", tfFName.getText());
@@ -285,7 +284,7 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
                     newDoctor.put("address", tfAddress.getText());
                     newDoctor.put("username", tfUsername.getText());
                     newDoctor.put("password", tfPassword.getText());
-                    addNewDoctor(newDoctor); //Run method to get a new doctor
+                    addNewPerson(newDoctor, "src/main/java/JSON/doctors.json", "doctors"); //Run method to get a new doctor
                 }
                 else
                 {
@@ -304,25 +303,25 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
         workOutAccountType();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void workOutAccountType()
+    private void workOutAccountType() //This method is called when removing an account
     {
         char D = 'D';
-        if (cbDocsSec.getSelectedItem().toString().charAt(0) == D)
+        if (cbDocsSec.getSelectedItem().toString().charAt(0) == D) //Doctor IDs always start with D, therefore this is used
         {
-            removeAccount("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json", "doctors");
-                  fillComboBox("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json", "doctors");
-                  fillComboBox("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Secretaries.json", "secretaries");
+            removeAccount("src/main/java/JSON/doctors.json", "doctors");
+                  fillComboBox("src/main/java/JSON/doctors.json", "doctors");
+                  fillComboBox("src/main/java/JSON/Secretaries.json", "secretaries");
                   JOptionPane.showMessageDialog(null, "Successfully removed doctor.");
         }
         else
         {
-            removeAccount("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Secretaries.json", "secretaries");
-                  fillComboBox("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json", "doctors");
-                  fillComboBox("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Secretaries.json", "secretaries");
+            removeAccount("src/main/java/JSON/Secretaries.json", "secretaries");
+                  fillComboBox("src/main/java/JSON/doctors.json", "doctors");
+                  fillComboBox("src/main/java/JSON/Secretaries.json", "secretaries");
                   JOptionPane.showMessageDialog(null, "Successfully removed secretary.");
         }
     }
-    private void removeAccount(String fileName, String arrayName)
+    private void removeAccount(String fileName, String arrayName) //Code to remove the account using FileWriter and JSONArray manipulation
     {
         JSONParser parser = new JSONParser();
         try (Reader reader = new FileReader(fileName)) 
@@ -366,27 +365,28 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
             e.printStackTrace();
         } 
     }
-    private void addNewSecretary(JSONObject newSecretary)
+    public void addNewPerson(JSONObject newPerson, String fileName, String arrayName) //Code to add a new secretary
     {
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Secretaries.json")) 
+        try (Reader reader = new FileReader(fileName)) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
-            JSONArray secretaries = (JSONArray) jsonObject.get("doctors"); //Obtain the full array of doctors
-            secretaries.add(newSecretary); //Add in the new doctor
-            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Secretaries.json");
+            JSONArray secretaries = (JSONArray) jsonObject.get(arrayName); //Obtain the full array of secretaries
+            secretaries.add(newPerson); //Add in the new doctor
+            FileWriter JSONFile = new FileWriter(fileName);
                 try
                 {
-                    String intro = ("{" + (char)34 + "doctors" + (char)34) + ":";
+                    //Writing code
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":"; //Used for the start of JSONArrays
                     JSONFile.write(intro + secretaries.toJSONString() + "}");
                 }
                 catch (IOException e)
                 {
                     e.printStackTrace();
                 }
-                JSONFile.flush();
-                JSONFile.close();
+                JSONFile.flush(); 
+                JSONFile.close(); //Write and apply changes
                 JOptionPane.showMessageDialog(null, "Successfully added new secretary!");
             
         
@@ -404,45 +404,7 @@ try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT25
             e.printStackTrace();
         }
     }
-    private void addNewDoctor(JSONObject newDoctor)
-    {
-        JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json")) 
-        {
-            
-            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
-            JSONArray doctors = (JSONArray) jsonObject.get("doctors"); //Obtain the full array of doctors
-            doctors.add(newDoctor); //Add in the new doctor
-            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json");
-                try
-                {
-                    String intro = ("{" + (char)34 + "doctors" + (char)34) + ":";
-                    JSONFile.write(intro + doctors.toJSONString() + "}");
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-                JSONFile.flush();
-                JSONFile.close();
-                JOptionPane.showMessageDialog(null, "Successfully added new doctor!");
-            
-        
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ParseException e) 
-        {
-            e.printStackTrace();
-        }
-
-    }
+    
     /**
      * @param args the command line arguments
      */

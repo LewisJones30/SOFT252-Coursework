@@ -180,7 +180,7 @@ public class orderMedicine extends javax.swing.JFrame {
         if (chbMedicines.isSelected() == true)
         {
             JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/MedicineInformation.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -205,7 +205,7 @@ public class orderMedicine extends javax.swing.JFrame {
             newMedicine.put("quantity", tfQuantity.getText());
             medicines.add(newMedicine);
             }
-            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json");
+            FileWriter JSONFile = new FileWriter("src/main/java/JSON/MedicineInformation.json");
                     try
                     {
                         String intro = ("{" + (char)34 + "medicines" + (char)34) + ":";
@@ -283,7 +283,7 @@ public class orderMedicine extends javax.swing.JFrame {
     private void fillMedicines()
     {
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json")) 
+try (Reader reader = new FileReader("src/main/java/JSON/MedicineInformation.json")) 
         {
             
 JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object

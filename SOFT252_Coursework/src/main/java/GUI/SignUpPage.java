@@ -167,13 +167,13 @@ private void SendToNewPatients()
     newPatient.put("gender", cbGender.getSelectedItem());
     newPatient.put("address", tfAddress.getText());
     JSONParser parser = new JSONParser();
-    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\NewPatients.json")) 
+    try (Reader reader = new FileReader("src/main/java/JSON/NewPatients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray newPatientsArray = (JSONArray) jsonObject.get("NewPatients");
             newPatientsArray.add(newPatient);
-            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\NewPatients.json");
+            FileWriter JSONFile = new FileWriter("src/main/java/JSON/NewPatients.json");
             String intro = ("{" + (char)34 + "NewPatients" + (char)34) + ":";
             JSONFile.write(intro + newPatientsArray.toJSONString() + "}");
             JSONFile.flush();

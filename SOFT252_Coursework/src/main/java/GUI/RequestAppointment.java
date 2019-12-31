@@ -167,7 +167,7 @@ public class RequestAppointment extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Checks here to ensure that there has been data chosen successfully.
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AppointmentRequests.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/AppointmentRequests.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray requests = (JSONArray) jsonObject.get("Appointments");
@@ -177,7 +177,7 @@ public class RequestAppointment extends javax.swing.JFrame {
             newAppointment.put("latestdate", tfLatestDate.getText());
             newAppointment.put("PatientID", patientIDNum.toString());
             requests.add(newAppointment);
-            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\AppointmentRequests.json");
+            FileWriter JSONFile = new FileWriter("src/main/java/JSON/AppointmentRequests.json");
         try
         {
             String intro = ("{" + (char)34 + "Appointments" + (char)34) + ":";
@@ -250,7 +250,7 @@ public class RequestAppointment extends javax.swing.JFrame {
 public final  void fillComboBox()
 {
     JSONParser parser = new JSONParser(); 
-    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Doctors.json")) 
+    try (Reader reader = new FileReader("src/main/java/JSON/Doctors.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray doctors = (JSONArray) jsonObject.get("doctors");
