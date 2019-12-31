@@ -309,6 +309,7 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
         if (cbDocsSec.getSelectedItem().toString().charAt(0) == D) //Doctor IDs always start with D, therefore this is used
         {
             removeAccount("src/main/java/JSON/doctors.json", "doctors");
+            cbDocsSec.removeAllItems();
                   fillComboBox("src/main/java/JSON/doctors.json", "doctors");
                   fillComboBox("src/main/java/JSON/Secretaries.json", "secretaries");
                   JOptionPane.showMessageDialog(null, "Successfully removed doctor.");

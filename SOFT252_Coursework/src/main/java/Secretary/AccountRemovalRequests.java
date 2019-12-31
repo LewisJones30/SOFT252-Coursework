@@ -4,7 +4,15 @@
  * and open the template in the editor.
  */
 package Secretary;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
 /**
  *
  * @author Lewis
@@ -16,6 +24,7 @@ public class AccountRemovalRequests extends javax.swing.JFrame {
      */
     public AccountRemovalRequests() {
         initComponents();
+        getRemovals();
     }
 
     /**
@@ -28,26 +37,25 @@ public class AccountRemovalRequests extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taRequests = new javax.swing.JTextArea();
 
         setTitle("Account Removal Requests");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("Account Removal Requests:");
 
-        jTextField1.setEnabled(false);
-
         jLabel2.setText("These are patients who have requested to be removed:");
+
+        taRequests.setColumns(20);
+        taRequests.setRows(5);
+        jScrollPane1.setViewportView(taRequests);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField1)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(70, Short.MAX_VALUE)
                 .addComponent(jLabel2)
@@ -56,6 +64,10 @@ public class AccountRemovalRequests extends javax.swing.JFrame {
                 .addGap(97, 97, 97)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -64,8 +76,8 @@ public class AccountRemovalRequests extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -106,10 +118,39 @@ public class AccountRemovalRequests extends javax.swing.JFrame {
             }
         });
     }
+    public void getRemovals()
+    {
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("src/main/java/JSON/AccountTermination.json")) 
+        {
+            
+        JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+        JSONArray array = (JSONArray) jsonObject.get("requests");
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject currentRequest = (JSONObject) array.get(i);
+               taRequests.setText(taRequests.getText() + "Patient ID: " + currentRequest.get("patientID") + "\n"); 
+            }
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea taRequests;
     // End of variables declaration//GEN-END:variables
 }

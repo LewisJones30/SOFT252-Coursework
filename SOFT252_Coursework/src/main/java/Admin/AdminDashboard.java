@@ -6,6 +6,7 @@
 package Admin;
 
 import GUI.AllDoctorRating;
+import GUI.Login;
 
 /**
  *
@@ -139,6 +140,8 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        new Login().setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

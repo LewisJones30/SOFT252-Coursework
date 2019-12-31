@@ -18,7 +18,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author Lewis
  */
-public class AllDoctorRating extends javax.swing.JPanel {
+public class AllDoctorRating extends javax.swing.JFrame {
 
     /**
      * Creates new form AllDoctorRating
@@ -37,18 +37,18 @@ public class AllDoctorRating extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitle = new javax.swing.JLabel();
-        lblName = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         cbDocs = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         taPatientFeedback = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblTitle.setText("Here you are able to choose the doctors to see their ratings:");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblName.setText("Doctor's name:");
+        jLabel1.setText("Here you are able to see all feedback for a choice of doctor");
+
+        jLabel2.setText("Doctor chosen:");
 
         cbDocs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,65 +56,62 @@ public class AllDoctorRating extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Back");
-
         taPatientFeedback.setColumns(20);
         taPatientFeedback.setRows(5);
+        taPatientFeedback.setEnabled(false);
         jScrollPane1.setViewportView(taPatientFeedback);
 
-        jLabel1.setText("Feedback given by other patients for this doctor:");
+        jLabel3.setText("Feedback given by patients:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(61, 61, 61)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblName)
-                                        .addGap(35, 35, 35)
-                                        .addComponent(cbDocs, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel1))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbDocs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel3)))
+                        .addGap(0, 44, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(lblTitle)
-                .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(lblTitle)
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblName)
-                    .addComponent(cbDocs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cbDocs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbDocsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDocsActionPerformed
         // TODO add your handling code here:
         taPatientFeedback.setText("");
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("src/main/java/DoctorFeedback.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/DoctorFeedback.json")) 
         {
             
 JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -124,7 +121,7 @@ JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON obje
                 String doctorName = currentFeedback.get("DoctorName").toString();
                 if (doctorName.equals(cbDocs.getSelectedItem().toString()))
                 {
-                    taPatientFeedback.setText(taPatientFeedback.getText() + "\n" + currentFeedback.get("feedbackGiven"));
+                    taPatientFeedback.setText(taPatientFeedback.getText() + "\n" + currentFeedback.get("Comment"));
                 }
             }
         
@@ -143,7 +140,42 @@ JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON obje
         }
     }//GEN-LAST:event_cbDocsActionPerformed
 
-public void getDoctors()
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AllDoctorRating.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AllDoctorRating.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AllDoctorRating.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AllDoctorRating.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AllDoctorRating().setVisible(true);
+            }
+        });
+    }         
+    
+    public void getDoctors()
     {
         JSONParser parser = new JSONParser(); 
     try (Reader reader = new FileReader("src/main/java/JSON/Doctors.json")) 
@@ -172,14 +204,12 @@ public void getDoctors()
 
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbDocs;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblTitle;
     private javax.swing.JTextArea taPatientFeedback;
     // End of variables declaration//GEN-END:variables
 }
