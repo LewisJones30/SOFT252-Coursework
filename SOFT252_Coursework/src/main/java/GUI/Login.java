@@ -8,6 +8,7 @@ package GUI;
 import Doctor.DoctorDashboard;
 import Secretary.SecretaryDashboard;
 import Admin.AdminDashboard;
+import java.io.File;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,6 +19,7 @@ import java.util.Iterator;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import javax.swing.JOptionPane;
 /**
  *
@@ -138,14 +140,15 @@ public String getloggedInId()
         It runs the attemptLoginUser for each person it finds.
         It will run the specific dashboard needed from there.
         */
-        JSONParser parser = new JSONParser();     //Try reading for Doctors
-        try (Reader reader = new FileReader("src/main/java/JSON/Doctors.json")) 
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("JSON/Doctors.json"))
         {
+
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray doctors = (JSONArray) jsonObject.get("doctors");
             for (int i = 0; i < doctors.size(); i++) {
                 JSONObject test = (JSONObject) doctors.get(i);
-                attemptLoginUser(test, "D");
+                attemptLoginUser(test, "D", tfUsername.getText(), tfPassword.getText());
             }
         }
         catch (FileNotFoundException e)
@@ -162,13 +165,13 @@ public String getloggedInId()
         }
         
         //Attempt to login through the patients
-        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
+        try (Reader reader = new FileReader("JSON/Patients.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray patients = (JSONArray) jsonObject.get("patients");
             for (int i = 0; i < patients.size(); i++) {
                 JSONObject test = (JSONObject) patients.get(i);
-                attemptLoginUser(test, "P");      
+                attemptLoginUser(test, "P", tfUsername.getText(), tfPassword.getText());      
             }
             
         
@@ -187,13 +190,13 @@ public String getloggedInId()
         }
         //Check for admins
         
-        try (Reader reader = new FileReader("src/main/java/JSON/Admins.json")) 
+        try (Reader reader = new FileReader("JSON/Admins.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray patients = (JSONArray) jsonObject.get("admins");
             for (int i = 0; i < patients.size(); i++) {
                 JSONObject test = (JSONObject) patients.get(i);
-                attemptLoginUser(test, "A");  
+                attemptLoginUser(test, "A", tfUsername.getText(), tfPassword.getText());  
             }
         }
         catch (FileNotFoundException e)
@@ -209,7 +212,7 @@ public String getloggedInId()
             e.printStackTrace();
         }
         //Attempt login from Secretaries
-        try (Reader reader = new FileReader("src/main/java/JSON/Secretaries.json")) 
+        try (Reader reader = new FileReader("JSON/Secretaries.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray array = (JSONArray) jsonObject.get("secretaries");
@@ -218,7 +221,7 @@ public String getloggedInId()
             
             for (int i = 0; i < array.size(); i++) {
                 JSONObject test = (JSONObject) array.get(i);
-                attemptLoginUser(test, "S");
+                attemptLoginUser(test, "S", tfUsername.getText(), tfPassword.getText());
                     }
             
         
@@ -243,17 +246,15 @@ public String getloggedInId()
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public boolean attemptLoginUser(JSONObject person, String type)
+    public boolean attemptLoginUser(JSONObject person, String type, String enteredUsername, String enteredPassword)
     {
         //Boolean is used for JUnit testing purposes.
                 String username = person.get("username").toString();
-                System.out.println(username);
-                System.out.println(tfUsername.getText());
-                if (username.equals(tfUsername.getText()))
+                if (username.equals(enteredUsername))
                 {
                     String password = person.get("password").toString();
                     System.out.println("1/2 complete.");
-                    if (password.equals(tfPassword.getText()))
+                    if (password.equals(enteredPassword))
                     {
                         String Name = person.get("firstname") + " " + person.get("surname");
                         if ("D".equals(type))

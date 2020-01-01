@@ -169,7 +169,7 @@ public class NewPrescription extends javax.swing.JFrame {
 
     public void fillPatients(){
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\Patients.json")) 
+        try (Reader reader = new FileReader("JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -218,7 +218,7 @@ public class NewPrescription extends javax.swing.JFrame {
     {
         JSONParser parser = new JSONParser();
 
-        try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json")) 
+        try (Reader reader = new FileReader("src/main/java/MedicineInformation.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray allMedicines = (JSONArray) jsonObject.get("medicines");
@@ -231,7 +231,7 @@ public class NewPrescription extends javax.swing.JFrame {
                     if (stock - prescribed > -1)
                     {
                         currentMed.put("quantity", stock - prescribed);
-                        FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\MedicineInformation.json");
+                        FileWriter JSONFile = new FileWriter("JSON/MedicineInformation.json");
                         String intro = ("{" + (char)34 + "medicines" + (char)34) + ":";
                         JSONFile.write(intro + allMedicines.toJSONString() + "}");  
                         JSONFile.flush();
@@ -286,7 +286,7 @@ public class NewPrescription extends javax.swing.JFrame {
         newPrescription.put("DoctorID", doctorID);
         JSONParser parser = new JSONParser();
 
-        try (Reader reader = new FileReader("src/main/java/JSON/Prescriptions.json")) 
+        try (Reader reader = new FileReader("JSON/Prescriptions.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray allPrescriptions = (JSONArray) jsonObject.get("Prescriptions");
@@ -352,7 +352,7 @@ public class NewPrescription extends javax.swing.JFrame {
      private void fillMedicines()
     {
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("src/main/java/JSON/MedicineInformation.json")) 
+try (Reader reader = new FileReader("JSON/MedicineInformation.json")) 
         {
             
 JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object

@@ -238,11 +238,12 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         //This code determines where to write the new user to
-        if (chbSec.isSelected() == true && chbDoc.isSelected() == true) //Both new doctor and new secretary are chosen
+        //State pattern
+        if (chbSec.isSelected() == true && chbDoc.isSelected() == true) //Both new doctor and new secretary are chosen, State 0 - Error, no additions are run.
         {
             JOptionPane.showMessageDialog(null, "You have selected both a new doctor and secretary. Please amend this.");
         }
-        else if (chbSec.isSelected() == true) //new secretary is chosen
+        else if (chbSec.isSelected() == true) //new secretary is chosen. State 1 - Adding new secretary.
         {
             char s = 'S';
             if (tfUsername.getText().charAt(0) == s) //Initial check to ensure that the first letter of the username is consistent.
@@ -270,7 +271,7 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
             }
             //Add new secretary
         }
-        else if (chbDoc.isSelected() == true) //new doctor has been selected
+        else if (chbDoc.isSelected() == true) //new doctor has been selected - State 2 - Adding new doctor.
         {
             char D = 'D';
             if (tfUsername.getText().charAt(0) == D)

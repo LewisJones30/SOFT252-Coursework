@@ -6,6 +6,16 @@
 package Secretary;
 
 import GUI.Login;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,6 +53,7 @@ public class SecretaryDashboard extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        btnMedReq = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Secretary Dashboard");
@@ -96,6 +107,13 @@ public class SecretaryDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnMedReq.setText("See Medicine Requests");
+        btnMedReq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMedReqActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,14 +135,17 @@ public class SecretaryDashboard extends javax.swing.JFrame {
                             .addComponent(lblName)
                             .addComponent(jButton1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(jButton8))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(101, 101, 101)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(jButton8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(btnMedReq)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -146,7 +167,9 @@ public class SecretaryDashboard extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton7)
                     .addComponent(jButton5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnMedReq)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jButton8)
                 .addContainerGap())
         );
@@ -187,6 +210,39 @@ public class SecretaryDashboard extends javax.swing.JFrame {
         new AccountRemovalRequests().setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void btnMedReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedReqActionPerformed
+        // TODO add your handling code here:
+        String requests = "";
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("JSON/MedicineRequests.json")) 
+        {
+            
+        JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray medicines = (JSONArray) jsonObject.get("medicineRequests");
+            for (int i = 0; i < medicines.size(); i++) {
+                JSONObject current = (JSONObject) medicines.get(i);
+                requests = requests + current.get("medicineName") + "\n";
+            }
+        
+        }
+
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+        JOptionPane.showMessageDialog(null, "Here are the medicines that have been requested: \n " +  requests);
+
+        
+    }//GEN-LAST:event_btnMedReqActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -223,6 +279,7 @@ public class SecretaryDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMedReq;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

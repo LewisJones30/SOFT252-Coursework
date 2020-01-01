@@ -246,7 +246,7 @@ public class NewPatients extends javax.swing.JFrame implements IPatient {
     private void updatePatients()
     {
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("src/main/java/JSON/NewPatients.json")) 
+try (Reader reader = new FileReader("JSON/NewPatients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -285,7 +285,7 @@ try (Reader reader = new FileReader("src/main/java/JSON/NewPatients.json"))
     private void LoadPatients()
     {
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("src/main/java/NewPatients.json")) 
+try (Reader reader = new FileReader("NewPatients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -321,13 +321,13 @@ try (Reader reader = new FileReader("src/main/java/NewPatients.json"))
         approvedPatient.put("username", "P" + tfID.getText());
         approvedPatient.put("password", "password");
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
+try (Reader reader = new FileReader("JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray newPatientsArray = (JSONArray) jsonObject.get("patients");
             newPatientsArray.add(approvedPatient);
-            FileWriter JSONFile = new FileWriter("src/main/java/JSON/Patients.json");
+            FileWriter JSONFile = new FileWriter("JSON/Patients.json");
             String intro = ("{" + (char)34 + "patients" + (char)34) + ":";
             JSONFile.write(intro + newPatientsArray.toJSONString() + "}");
             JSONFile.flush();

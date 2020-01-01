@@ -121,7 +121,7 @@ public class AccountRemovalRequests extends javax.swing.JFrame {
     public void getRemovals()
     {
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("src/main/java/JSON/AccountTermination.json")) 
+        try (Reader reader = new FileReader("sJSON/AccountTermination.json")) 
         {
             
         JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object

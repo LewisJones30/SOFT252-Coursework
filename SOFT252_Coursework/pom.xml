@@ -31,6 +31,13 @@
             <version>5.3.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+    <groupId>com.googlecode.json-simple</groupId>
+    <artifactId>json-simple</artifactId>
+    <version>1.</version>
+    <scope>system</scope>
+    <systemPath>${project.basedir}/src/main/resources/json-simple-1.1.jar</systemPath>
+</dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,6 +59,40 @@
               </archive>
           </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+            <execution>
+                <phase>install</phase>
+                <goals>
+                    <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+    <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+            <archive>
+                <manifest>
+                    <addClasspath>true</addClasspath>
+                    <classpathPrefix>lib/</classpathPrefix>
+                    <mainClass>GUI.Login</mainClass>
+                </manifest>
+            </archive>
+        </configuration>
+    </plugin>
   </plugins>
+  <resources>
+      <resource>
+          <directory> src/main/resources</directory>
+          <includes>
+              <include>**/*</include>
+          </includes>
+      </resource>
+  </resources>
 </build>
 </project>

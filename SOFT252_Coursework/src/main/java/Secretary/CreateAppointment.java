@@ -162,7 +162,7 @@ public class CreateAppointment extends javax.swing.JFrame
     public Boolean CreateAppointment(String doctorName, String patientID, String AppointmentDate)
     {
                     JSONParser parser = new JSONParser();
-    try (Reader reader = new FileReader("src/main/java/JSON/ScheduledAppointments.json")) 
+    try (Reader reader = new FileReader("JSON/ScheduledAppointments.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -172,7 +172,7 @@ public class CreateAppointment extends javax.swing.JFrame
             newAppointment.put("PatientID", tfID.getText());
             newAppointment.put("AppointmentDate", tfDate.getText());
             ScheduledAppointments.add(newAppointment);
-            FileWriter JSONFile = new FileWriter("src/main/java/JSON/ScheduledAppointments.json");
+            FileWriter JSONFile = new FileWriter("JSON/ScheduledAppointments.json");
             try
             {
                 String intro = ("{" + (char)34 + "ScheduledAppointments" + (char)34) + ":";
@@ -237,7 +237,7 @@ public class CreateAppointment extends javax.swing.JFrame
      public void fillDoctors()
     {
                 JSONParser parser = new JSONParser(); 
-    try (Reader reader = new FileReader("src/main/java/JSON/Doctors.json")) 
+    try (Reader reader = new FileReader("JSON/Doctors.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray doctors = (JSONArray) jsonObject.get("doctors");

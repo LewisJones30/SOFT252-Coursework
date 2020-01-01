@@ -175,7 +175,7 @@ public class patientManagement extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
+        try (Reader reader = new FileReader("JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -190,7 +190,7 @@ public class patientManagement extends javax.swing.JFrame {
                     currentPatient.put("address", tfAddress.getText());
                 }
             }
-        FileWriter JSONFile = new FileWriter("src/main/java/JSON/Patients.json");
+        FileWriter JSONFile = new FileWriter("JSON/Patients.json");
         try
         {
             String intro = ("{" + (char)34 + "patients" + (char)34) + ":";

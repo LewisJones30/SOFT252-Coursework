@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -69,16 +70,16 @@ public class PatientHistory extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(331, Short.MAX_VALUE)
+                        .addContainerGap(783, Short.MAX_VALUE)
                         .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(285, 285, 285)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,7 +133,7 @@ public class PatientHistory extends javax.swing.JFrame {
     public Boolean loadPatientHistory(String PatientID)
     {
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("src/main/java/JSON/PatientHistoryRecords.json")) 
+        try (Reader reader = new FileReader("JSON/PatientHistoryRecords.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -163,6 +164,11 @@ public class PatientHistory extends javax.swing.JFrame {
             e.printStackTrace();
             return false;
         }
+        catch (NullPointerException e)
+        {
+            JOptionPane.showMessageDialog(null, "An error has occurred!");
+        }
+        JOptionPane.showMessageDialog(null, "This user has not been found.");
         return null;
 
     }

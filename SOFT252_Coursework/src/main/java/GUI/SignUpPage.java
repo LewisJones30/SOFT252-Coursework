@@ -167,7 +167,7 @@ private void SendToNewPatients()
     newPatient.put("gender", cbGender.getSelectedItem());
     newPatient.put("address", tfAddress.getText());
     JSONParser parser = new JSONParser();
-    try (Reader reader = new FileReader("src/main/java/JSON/NewPatients.json")) 
+    try (Reader reader = new FileReader("JSON/NewPatients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object

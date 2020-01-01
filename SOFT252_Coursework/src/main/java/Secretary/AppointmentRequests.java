@@ -136,7 +136,7 @@ public class AppointmentRequests extends javax.swing.JFrame {
     public void LoadRequests()
     {
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("src/main/java/JSON/AppointmentRequests.json")) 
+        try (Reader reader = new FileReader("JSON/AppointmentRequests.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object

@@ -6,8 +6,10 @@
 package Doctor;
 
 import GUI.Login;
+import GUI.PatientHistory;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import javax.swing.JOptionPane;
@@ -61,6 +63,8 @@ public class DoctorDashboard extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Doctor Dashboard");
@@ -70,6 +74,11 @@ public class DoctorDashboard extends javax.swing.JFrame {
         jLabel2.setText("This is the Doctor's dashboard.");
 
         jButton1.setText("Inspect Patient History");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("View Appointments");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +103,15 @@ public class DoctorDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setText("Request a new medicine");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("Make notes on a patient");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,25 +122,27 @@ public class DoctorDashboard extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addComponent(lblDocName))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(47, 47, 47)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jButton5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jButton2))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jButton5)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                            .addComponent(jLabel2)
+                            .addComponent(jButton7))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +151,9 @@ public class DoctorDashboard extends javax.swing.JFrame {
                 .addComponent(lblDocName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
@@ -139,9 +161,11 @@ public class DoctorDashboard extends javax.swing.JFrame {
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -194,6 +218,64 @@ public class DoctorDashboard extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        String newMedicine = JOptionPane.showInputDialog("Please input the name of the medicine you wish to request.");
+        if (!"".equals(newMedicine))
+        {
+            JSONObject newRequest = new JSONObject();
+            newRequest.put("medicineName", newMedicine);
+            WriteRequest(newRequest);
+            JOptionPane.showMessageDialog(null, "Your request has been sent to the secretaries to order.");
+            
+            
+            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "You have not inserted a name of a medicine. Please try again.");
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String patientID = JOptionPane.showInputDialog("Please insert the patientID you wish to inspect.");
+        if (patientID != "")
+        {
+            String welcomeText = patientID + "'s history";
+            new PatientHistory(welcomeText, patientID).setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+private void WriteRequest(JSONObject newRequest)
+{
+    JSONParser parser = new JSONParser();
+    try (Reader reader = new FileReader("JSON/MedicineRequests.json")) 
+        {
+            
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray allRequests = (JSONArray) jsonObject.get("medicineRequests");
+            FileWriter JSONFile = new FileWriter("src/main/java/JSON/MedicineRequests.json");
+            String intro = ("{" + (char)34 + "patients" + (char)34) + ":";
+            JSONFile.write(intro + allRequests.toJSONString() + "}");
+            JSONFile.flush();
+            JSONFile.close();
+            
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+
+}
     /**
      * @param args the command line arguments
      */
@@ -235,6 +317,8 @@ public class DoctorDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblDocName;
     // End of variables declaration//GEN-END:variables
