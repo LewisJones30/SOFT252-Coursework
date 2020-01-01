@@ -98,17 +98,6 @@ public class patientManagement extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -132,6 +121,17 @@ public class patientManagement extends javax.swing.JFrame {
                 .addGap(168, 168, 168)
                 .addComponent(jButton3)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,9 +224,8 @@ public class patientManagement extends javax.swing.JFrame {
         this.setVisible(false);
         new SecretaryDashboard().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    public boolean RemovePatient(String patientUsername)
+    {
         int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to delete this patient?");
         if (dialogResult == JOptionPane.YES_OPTION)
         {
@@ -239,7 +238,7 @@ public class patientManagement extends javax.swing.JFrame {
             for (int i = 0; i < patients.size(); i++) {
                 JSONObject currentPatient = (JSONObject) patients.get(i);
                 String username = currentPatient.get("username").toString();
-                if (username.equals( cbPatients.getSelectedItem()))
+                if (username.equals( patientUsername))
                 {
                     patients.remove(i);
                 }
@@ -251,6 +250,7 @@ public class patientManagement extends javax.swing.JFrame {
             JSONFile.write(intro + patients.toJSONString() + "}");
             JSONFile.flush();
             JSONFile.close();
+            return true;
 
         }
         catch (IOException e)
@@ -262,16 +262,32 @@ public class patientManagement extends javax.swing.JFrame {
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
+            return false;
         }
         catch (IOException e)
         {
             e.printStackTrace();
+            return false;
         }
         catch (ParseException e) 
         {
             e.printStackTrace();
+            return false;
         } 
+
         }
+        else
+        {
+        return false;
+        }
+        return false;
+        
+    }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String patientUsername = cbPatients.getSelectedItem().toString();
+        RemovePatient(patientUsername);
+        
          
             
     }//GEN-LAST:event_jButton2ActionPerformed

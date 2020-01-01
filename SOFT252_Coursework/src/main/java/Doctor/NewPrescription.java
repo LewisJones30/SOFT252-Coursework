@@ -23,6 +23,10 @@ import org.json.simple.parser.ParseException;
 public class NewPrescription extends javax.swing.JFrame {
 
     public String DoctorID;
+    public String MedicineName;
+    public String Quantity;
+    public String PatientID;
+    public String Comment;
     /**
      * Creates new form NewPrescription
      */
@@ -200,7 +204,7 @@ public class NewPrescription extends javax.swing.JFrame {
         boolean prescriptionAllowed = checkPrescription();
         if (prescriptionAllowed == true)
         {
-                   WritePrescriptionToFile(); 
+                   getInformation(); 
                    JOptionPane.showMessageDialog(null, "Prescription has been successfully dispensed to the patient.");
         }
         else
@@ -210,7 +214,7 @@ public class NewPrescription extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private boolean checkPrescription()
+    public boolean checkPrescription()
     {
         JSONParser parser = new JSONParser();
 
@@ -262,38 +266,52 @@ public class NewPrescription extends javax.swing.JFrame {
         }
         return false;
     }
-    private void WritePrescriptionToFile()
+    private void getInformation()
+    {
+        PatientID = cbPatientNumber.getSelectedItem().toString();
+        MedicineName = cbMedicines.getSelectedItem().toString();
+        Quantity = tfQuantity.getText();
+        Comment = taDosage.getText();
+        WritePrescriptionToFile(PatientID, MedicineName, Quantity, Comment, DoctorID);
+        
+        
+    }
+    public boolean WritePrescriptionToFile(String patientID, String medicineName, String quantity, String comment, String doctorID)
     {
         JSONObject newPrescription = new JSONObject();
-        newPrescription.put("PatientID", cbPatientNumber.getSelectedItem());
-        newPrescription.put("MedicineName", cbMedicines.getSelectedItem());
-        newPrescription.put("Quantity", tfQuantity.getText());
-        newPrescription.put("Comment", taDosage.getText());
-        newPrescription.put("DoctorID", GetDoctorID());
+        newPrescription.put("PatientID", patientID);
+        newPrescription.put("MedicineName", medicineName);
+        newPrescription.put("Quantity", quantity);
+        newPrescription.put("Comment", comment);
+        newPrescription.put("DoctorID", doctorID);
         JSONParser parser = new JSONParser();
 
-        try (Reader reader = new FileReader("src/main/java/Prescriptions.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/Prescriptions.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray allPrescriptions = (JSONArray) jsonObject.get("Prescriptions");
             allPrescriptions.add(newPrescription);
-            FileWriter JSONFile = new FileWriter("src/main/java/Prescriptions.json");
+            FileWriter JSONFile = new FileWriter("src/main/java/JSON/Prescriptions.json");
             String intro = ("{" + (char)34 + "Prescriptions" + (char)34) + ":";
             JSONFile.write(intro + allPrescriptions.toJSONString() + "}");  
             JSONFile.flush();
             JSONFile.close();
+            return true;
         }
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
+            return false;
         }
         catch (IOException e)
         {
             e.printStackTrace();
+            return false;
         }
         catch (ParseException e) 
         {
             e.printStackTrace();
+            return false;
         }
     }
         

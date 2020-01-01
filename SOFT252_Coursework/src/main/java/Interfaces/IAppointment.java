@@ -10,7 +10,4 @@ import java.util.Date;
  * @author ljones30
  */
 public interface IAppointment {
-    String getDoctorID();
-    String getPatientID();
-    Date getAssignedDate();
 }

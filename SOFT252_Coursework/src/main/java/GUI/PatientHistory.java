@@ -32,7 +32,7 @@ public class PatientHistory extends javax.swing.JFrame {
         initComponents();
         patientID = PatientID;
         jLabel1.setText(text);
-        loadPatientHistory();
+        loadPatientHistory(patientID);
     }
 
     /**
@@ -129,10 +129,10 @@ public class PatientHistory extends javax.swing.JFrame {
             }
         });
     }
-    public void loadPatientHistory()
+    public Boolean loadPatientHistory(String PatientID)
     {
         JSONParser parser = new JSONParser();
-    try (Reader reader = new FileReader("src/main/java/JSON/PatientHistoryRecords.json")) 
+        try (Reader reader = new FileReader("src/main/java/JSON/PatientHistoryRecords.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -140,9 +140,10 @@ public class PatientHistory extends javax.swing.JFrame {
             for (int i = 0; i < records.size(); i++) {
                 JSONObject currentRecord = (JSONObject) records.get(i);
                 String currentPatient = currentRecord.get("patientID").toString();
-                if (currentPatient.equals(patientID))
+                if (currentPatient.equals(PatientID))
                 {
                     tfRecords.setText(currentRecord.get("Comment").toString());
+                    return true;
                 }
             }
         
@@ -150,15 +151,19 @@ public class PatientHistory extends javax.swing.JFrame {
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
+            return false;
         }
         catch (IOException e)
         {
             e.printStackTrace();
+            return false;
         }
         catch (ParseException e) 
         {
             e.printStackTrace();
+            return false;
         }
+        return null;
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

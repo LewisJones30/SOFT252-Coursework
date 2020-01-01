@@ -25,7 +25,10 @@ import javax.swing.JOptionPane;
  * @author Lewis
  */
 public class createAdmin extends javax.swing.JFrame {
-
+    public String firstName;
+    public String lastName;
+    public String username;
+    public String password;
     /**
      * Creates new form createAdmin
      */
@@ -151,8 +154,17 @@ public class createAdmin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        char a = 'A';
-        if (a == tfUser.getText().charAt(0))
+        firstName = tfFName.getText();
+        lastName = tfLName.getText();
+        username = tfUser.getText();
+        password = tfPass.getText();
+        addAdmin(firstName, lastName, username, password);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+public Boolean addAdmin(String firstName, String lastName, String userName, String password)
+{
+    char a = 'A';
+        if (a == userName.charAt(0))
         {
             JSONParser parser = new JSONParser();
             try (Reader reader = new FileReader("src/main/java/JSON/Admins.json"))
@@ -161,10 +173,10 @@ public class createAdmin extends javax.swing.JFrame {
                 JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
                 JSONArray admins = (JSONArray) jsonObject.get("admins");
                 JSONObject newAdmin = new JSONObject();
-                newAdmin.put("firstname", tfFName.getText());
-                newAdmin.put("surname", tfLName.getText());
-                newAdmin.put("username", tfUser.getText());
-                newAdmin.put("password", tfPass.getText());
+                newAdmin.put("firstname", firstName);
+                newAdmin.put("surname", lastName);
+                newAdmin.put("username", userName);
+                newAdmin.put("password", password);
                 admins.add(newAdmin);
                 FileWriter JSONFile = new FileWriter("src/main/java/JSON/Admins.json");
                 try
@@ -193,13 +205,14 @@ public class createAdmin extends javax.swing.JFrame {
                 e.printStackTrace();
             }
             JOptionPane.showMessageDialog(null, "Administrator created! Please close this window and check if the administrator is able to login.");
+            return true;
         }
         else
         {
             JOptionPane.showMessageDialog(null, "You have incorrectly input the username. Please check the username. The admin has not been created.");
+            return false;
         }        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+}
     /**
      * @param args the command line arguments
      */

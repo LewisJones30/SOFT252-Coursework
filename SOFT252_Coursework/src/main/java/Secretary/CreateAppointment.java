@@ -21,6 +21,9 @@ import java.io.FileWriter;
  */
 public class CreateAppointment extends javax.swing.JFrame
 {
+    public String DoctorName;
+    public String PatientID;
+    public String AppointmentDate;
 
     /**
      * Creates new form CreateAppointment
@@ -141,8 +144,25 @@ public class CreateAppointment extends javax.swing.JFrame
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("src/main/java/JSON/ScheduledAppointments.json")) 
+        String doctorName = cbDocs.getSelectedItem().toString();
+        String patientID = tfID.getText();
+        String date = tfDate.getText();
+        CreateAppointment(doctorName, patientID, date);
+
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new SecretaryDashboard().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public Boolean CreateAppointment(String doctorName, String patientID, String AppointmentDate)
+    {
+                    JSONParser parser = new JSONParser();
+    try (Reader reader = new FileReader("src/main/java/JSON/ScheduledAppointments.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -157,34 +177,29 @@ try (Reader reader = new FileReader("src/main/java/JSON/ScheduledAppointments.js
             {
                 String intro = ("{" + (char)34 + "ScheduledAppointments" + (char)34) + ":";
                 JSONFile.write(intro + ScheduledAppointments.toJSONString() + "}");
+                JSONFile.flush();
+                JSONFile.close();
+                return true;
             }
             
             catch (IOException e)
                     {
-                        
+                        return false;
                     }
-            JSONFile.flush();
-            JSONFile.close();
+
         }
 
             catch (IOException e)
         {
              e.printStackTrace();
+             return false;
         }                 
         catch (ParseException e) 
         {
             e.printStackTrace();
+            return false;
         }
-
-
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        new SecretaryDashboard().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
     /**
      * @param args the command line arguments
      */

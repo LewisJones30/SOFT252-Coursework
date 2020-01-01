@@ -133,35 +133,20 @@ public String getloggedInId()
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        /*
+        This code opens each of the four documents for Doctors, Patients, Admins and Secretaries
+        It runs the attemptLoginUser for each person it finds.
+        It will run the specific dashboard needed from there.
+        */
         JSONParser parser = new JSONParser();     //Try reading for Doctors
         try (Reader reader = new FileReader("src/main/java/JSON/Doctors.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray doctors = (JSONArray) jsonObject.get("doctors");
-            
-            
-            
             for (int i = 0; i < doctors.size(); i++) {
                 JSONObject test = (JSONObject) doctors.get(i);
-                String username = test.get("username").toString();
-                System.out.println(username);
-                System.out.println(tfUsername.getText().toString());
-                if (username.equals(tfUsername.getText().toString()))
-                {
-                    String password = test.get("password").toString();
-                    System.out.println("1/2 complete.");
-                    if (password.equals(tfPassword.getText().toString()))
-                    {
-                        String Name = test.get("firstname") + " " + test.get("surname");
-                        String doctorID = test.get("username").toString();
-                        new DoctorDashboard(doctorID, Name).setVisible(true);
-                        this.setVisible(false);
-                        return;
-                    }
-                }
+                attemptLoginUser(test, "D");
             }
-            
-        
         }
         catch (FileNotFoundException e)
         {
@@ -175,34 +160,15 @@ public String getloggedInId()
         {
             e.printStackTrace();
         }
+        
+        //Attempt to login through the patients
         try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray patients = (JSONArray) jsonObject.get("patients");
-            
-            
-            
             for (int i = 0; i < patients.size(); i++) {
                 JSONObject test = (JSONObject) patients.get(i);
-                String username = test.get("username").toString();
-                System.out.println(username);
-                System.out.println(tfUsername.getText().toString());
-                if (username.equals(tfUsername.getText().toString()))
-                {
-                    String password = test.get("password").toString();
-                    System.out.println("1/2 complete.");
-                    if (password.equals(tfPassword.getText().toString()))
-                    {
-                        String firstname = test.get("firstname").toString();
-                        String surname = test.get("surname").toString();
-                        String text = firstname + " " + surname;
-                        String patient = test.get("username").toString();
-                        new PatientDashboard(text, username).setVisible(true);
-                        this.setVisible(false);
-                        return;
-                        
-                    }
-                }
+                attemptLoginUser(test, "P");      
             }
             
         
@@ -219,37 +185,16 @@ public String getloggedInId()
         {
             e.printStackTrace();
         }
+        //Check for admins
+        
         try (Reader reader = new FileReader("src/main/java/JSON/Admins.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray patients = (JSONArray) jsonObject.get("admins");
-            
-            
-            
             for (int i = 0; i < patients.size(); i++) {
                 JSONObject test = (JSONObject) patients.get(i);
-                String username = test.get("username").toString();
-                System.out.println(username);
-                System.out.println(tfUsername.getText().toString());
-                if (username.equals(tfUsername.getText().toString()))
-                {
-                    String password = test.get("password").toString();
-                    System.out.println("1/2 complete.");
-                    if (password.equals(tfPassword.getText().toString()))
-                    {
-                        String firstname = test.get("firstname").toString();
-                        String surname = test.get("surname").toString();
-                        String text = firstname + " " + surname;
-                        String patient = test.get("username").toString();
-                        new AdminDashboard(text).setVisible(true);
-                        this.setVisible(false);
-                        return;
-                        
-                    }
-                }
+                attemptLoginUser(test, "A");  
             }
-            
-        
         }
         catch (FileNotFoundException e)
         {
@@ -263,7 +208,7 @@ public String getloggedInId()
         {
             e.printStackTrace();
         }
-        
+        //Attempt login from Secretaries
         try (Reader reader = new FileReader("src/main/java/JSON/Secretaries.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -273,25 +218,8 @@ public String getloggedInId()
             
             for (int i = 0; i < array.size(); i++) {
                 JSONObject test = (JSONObject) array.get(i);
-                String username = test.get("username").toString();
-                System.out.println(username);
-                System.out.println(tfUsername.getText().toString());
-                if (username.equals(tfUsername.getText().toString()))
-                {
-                    String password = test.get("password").toString();
-                    System.out.println("1/2 complete.");
-                    if (password.equals(tfPassword.getText().toString()))
-                    {
-                        String firstname = test.get("firstname").toString();
-                        String surname = test.get("surname").toString();
-                        String text = firstname + " " + surname;
-                        String patient = test.get("username").toString();
-                        new SecretaryDashboard(text).setVisible(true);
-                        this.setVisible(false);
-                        return;
+                attemptLoginUser(test, "S");
                     }
-                }
-            }
             
         
         }
@@ -312,8 +240,54 @@ public String getloggedInId()
         tfPassword.setText("");
         
         
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public boolean attemptLoginUser(JSONObject person, String type)
+    {
+        //Boolean is used for JUnit testing purposes.
+                String username = person.get("username").toString();
+                System.out.println(username);
+                System.out.println(tfUsername.getText());
+                if (username.equals(tfUsername.getText()))
+                {
+                    String password = person.get("password").toString();
+                    System.out.println("1/2 complete.");
+                    if (password.equals(tfPassword.getText()))
+                    {
+                        String Name = person.get("firstname") + " " + person.get("surname");
+                        if ("D".equals(type))
+                        {
+                        new DoctorDashboard(username, Name).setVisible(true);
+                        this.setVisible(false);
+                        return true;
+                        }
+                        else if ("P".equals(type))
+                        {
+                            new PatientDashboard(username, Name).setVisible(true);
+                            this.setVisible(false);
+                            return true;
+                        }
+                        else if ("S".equals(type))
+                        {
+                            new SecretaryDashboard(Name).setVisible(true);
+                            this.setVisible(false);
+                            return true;
+                        }
+                        else
+                        {
+                            new AdminDashboard(Name).setVisible(true);
+                            this.setVisible(false);
+                            return true;
+                        }
+
+                        
+
+                    }
+                }
+                return false;
+       }
+    
     /**
      * @param args the command line arguments
      */
