@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package System;
+package Interfaces;
 
 /**
  *
- * @author ljones30
+ * @author Lewis
  */
-public class Medicine {
+public interface IReadJSON {
     
 }

@@ -5,6 +5,7 @@
  */
 package Secretary;
 
+import Interfaces.IWriteJSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author Lewis
  */
-public class orderMedicine extends javax.swing.JFrame {
+public class orderMedicine extends javax.swing.JFrame implements IWriteJSON{
 
     /**
      * Creates new form orderMedicine
@@ -204,42 +205,20 @@ public class orderMedicine extends javax.swing.JFrame {
             newMedicine.put("name", tfNewMeds.getText());
             newMedicine.put("quantity", tfQuantity.getText());
             medicines.add(newMedicine);
+            WriteToJSON("JSON/MedicineInformation.json", newMedicine, "medicines");
             }
-            FileWriter JSONFile = new FileWriter("JSON/MedicineInformation.json");
-                    try
-                    {
-                        String intro = ("{" + (char)34 + "medicines" + (char)34) + ":";
-                        JSONFile.write(intro + medicines.toJSONString() + "}");
-                    }
-                    catch (IOException e)
-                            {
-                                e.printStackTrace();
-                            }
-            JSONFile.flush();
-            JSONFile.close();
-            JOptionPane.showMessageDialog(null, "Medicines have been ordered and stocked.");
         
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ParseException e) 
-        {
-            e.printStackTrace();
-        }
-
-        }
-        else
-        {
-            
-        }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+            catch (IOException e)
+                {
+                e.printStackTrace();
+                }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        }
+    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         new SecretaryDashboard().setVisible(true);
@@ -321,4 +300,46 @@ JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON obje
     private javax.swing.JTextField tfNewMeds;
     private javax.swing.JTextField tfQuantity;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean WriteToJSON(String fileName, JSONObject objectToWrite, String arrayName) {
+        JSONParser parser = new JSONParser();
+            try (Reader reader = new FileReader(fileName))
+            {
+                
+                JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+                JSONArray array = (JSONArray) jsonObject.get(arrayName);
+                
+                array.add(objectToWrite);
+                FileWriter JSONFile = new FileWriter(fileName);
+                try
+                {
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":";
+                    JSONFile.write(intro + array.toJSONString() + "}");
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                JSONFile.flush();
+                JSONFile.close();
+                return true;
+                
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        return false;
+    }
 }

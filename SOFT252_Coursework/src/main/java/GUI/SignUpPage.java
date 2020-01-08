@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package GUI;
+import Interfaces.IWriteJSON;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -23,7 +24,7 @@ import java.io.FileWriter;
  *
  * @author ljones30
  */
-public class SignUpPage extends javax.swing.JFrame {
+public class SignUpPage extends javax.swing.JFrame implements IWriteJSON{
 
     /**
      * Creates new form SignUpPage
@@ -166,32 +167,7 @@ private void SendToNewPatients()
     newPatient.put("age", tfAge.getText());
     newPatient.put("gender", cbGender.getSelectedItem());
     newPatient.put("address", tfAddress.getText());
-    JSONParser parser = new JSONParser();
-    try (Reader reader = new FileReader("JSON/NewPatients.json")) 
-        {
-            
-            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
-            JSONArray newPatientsArray = (JSONArray) jsonObject.get("NewPatients");
-            newPatientsArray.add(newPatient);
-            FileWriter JSONFile = new FileWriter("JSON/NewPatients.json");
-            String intro = ("{" + (char)34 + "NewPatients" + (char)34) + ":";
-            JSONFile.write(intro + newPatientsArray.toJSONString() + "}");
-            JSONFile.flush();
-            JSONFile.close();
-        
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ParseException e) 
-        {
-            e.printStackTrace();
-        }
+    WriteToJSON("JSON/NewPatients.json", newPatient, "NewPatients");
 
 }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -249,4 +225,46 @@ private void SendToNewPatients()
     private javax.swing.JFormattedTextField tfFName;
     private javax.swing.JFormattedTextField tfLname;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean WriteToJSON(String fileName, JSONObject objectToWrite, String arrayName) {
+        JSONParser parser = new JSONParser();
+            try (Reader reader = new FileReader(fileName))
+            {
+                
+                JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+                JSONArray array = (JSONArray) jsonObject.get(arrayName);
+                
+                array.add(objectToWrite);
+                FileWriter JSONFile = new FileWriter(fileName);
+                try
+                {
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":";
+                    JSONFile.write(intro + array.toJSONString() + "}");
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                JSONFile.flush();
+                JSONFile.close();
+                return true;
+                
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        return false;
+    }
 }

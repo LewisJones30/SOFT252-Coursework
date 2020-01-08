@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author Lewis
  */
-public class patientManagement extends javax.swing.JFrame {
+public class patientManagement extends javax.swing.JFrame { //Normally would implement IWriteJSON, however this is more lines of code than it replaces.
     public String patientID;
 
     /**

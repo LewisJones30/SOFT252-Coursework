@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package GUI;
+import Interfaces.IWriteJSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,7 +19,7 @@ import java.io.FileWriter;
  *
  * @author Lewis
  */
-public class RequestAppointment extends javax.swing.JFrame {
+public class RequestAppointment extends javax.swing.JFrame implements IWriteJSON{
 
     String patientIDNum;
     /**
@@ -166,42 +167,13 @@ public class RequestAppointment extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         //Checks here to ensure that there has been data chosen successfully.
-        JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("JSON/AppointmentRequests.json")) 
-        {
-            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
-            JSONArray requests = (JSONArray) jsonObject.get("Appointments");
             JSONObject newAppointment = new JSONObject();
             newAppointment.put("doctorname", cbDocs.getSelectedItem());
             newAppointment.put("earliestdate", tfEarlyDate.getText());
             newAppointment.put("latestdate", tfLatestDate.getText());
             newAppointment.put("PatientID", patientIDNum.toString());
-            requests.add(newAppointment);
-            FileWriter JSONFile = new FileWriter("JSON/AppointmentRequests.json");
-        try
-        {
-            String intro = ("{" + (char)34 + "Appointments" + (char)34) + ":";
-            JSONFile.write(intro + requests.toJSONString() + "}");
-        }
-        catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-        JSONFile.flush();
-        JSONFile.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ParseException e) 
-        {
-            e.printStackTrace();
-        }
+            WriteToJSON("JSON/AppointmentRequests.json", newAppointment, "Appointments");
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -287,4 +259,46 @@ public final  void fillComboBox()
     private javax.swing.JTextField tfEarlyDate;
     private javax.swing.JTextField tfLatestDate;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean WriteToJSON(String fileName, JSONObject objectToWrite, String arrayName) {
+        JSONParser parser = new JSONParser();
+            try (Reader reader = new FileReader(fileName))
+            {
+                
+                JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+                JSONArray array = (JSONArray) jsonObject.get(arrayName);
+                
+                array.add(objectToWrite);
+                FileWriter JSONFile = new FileWriter(fileName);
+                try
+                {
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":";
+                    JSONFile.write(intro + array.toJSONString() + "}");
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                JSONFile.flush();
+                JSONFile.close();
+                return true;
+                
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        return false;
+    }
 }

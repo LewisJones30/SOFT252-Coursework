@@ -5,6 +5,7 @@
  */
 package Secretary;
 
+import Interfaces.IWriteJSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,7 +20,7 @@ import java.io.FileWriter;
  *
  * @author Lewis
  */
-public class CreateAppointment extends javax.swing.JFrame
+public class CreateAppointment extends javax.swing.JFrame implements IWriteJSON
 {
     public String DoctorName;
     public String PatientID;
@@ -161,44 +162,12 @@ public class CreateAppointment extends javax.swing.JFrame
 
     public Boolean CreateAppointment(String doctorName, String patientID, String AppointmentDate)
     {
-                    JSONParser parser = new JSONParser();
-    try (Reader reader = new FileReader("JSON/ScheduledAppointments.json")) 
-        {
-            
-            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
-            JSONArray ScheduledAppointments = (JSONArray) jsonObject.get("ScheduledAppointments");
             JSONObject newAppointment = new JSONObject();
             newAppointment.put("DoctorName", cbDocs.getSelectedItem());
             newAppointment.put("PatientID", tfID.getText());
             newAppointment.put("AppointmentDate", tfDate.getText());
-            ScheduledAppointments.add(newAppointment);
-            FileWriter JSONFile = new FileWriter("JSON/ScheduledAppointments.json");
-            try
-            {
-                String intro = ("{" + (char)34 + "ScheduledAppointments" + (char)34) + ":";
-                JSONFile.write(intro + ScheduledAppointments.toJSONString() + "}");
-                JSONFile.flush();
-                JSONFile.close();
-                return true;
-            }
-            
-            catch (IOException e)
-                    {
-                        return false;
-                    }
-
-        }
-
-            catch (IOException e)
-        {
-             e.printStackTrace();
-             return false;
-        }                 
-        catch (ParseException e) 
-        {
-            e.printStackTrace();
-            return false;
-        }
+            Boolean result = WriteToJSON("JSON/ScheduledAppointments", newAppointment, "ScheduledAppointments");   
+            return result;
     }
     /**
      * @param args the command line arguments
@@ -274,4 +243,46 @@ public class CreateAppointment extends javax.swing.JFrame
     private javax.swing.JTextField tfDate;
     private javax.swing.JTextField tfID;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean WriteToJSON(String fileName, JSONObject objectToWrite, String arrayName) {
+        JSONParser parser = new JSONParser();
+            try (Reader reader = new FileReader(fileName))
+            {
+                
+                JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+                JSONArray array = (JSONArray) jsonObject.get(arrayName);
+                
+                array.add(objectToWrite);
+                FileWriter JSONFile = new FileWriter(fileName);
+                try
+                {
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":";
+                    JSONFile.write(intro + array.toJSONString() + "}");
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                JSONFile.flush();
+                JSONFile.close();
+                return true;
+                
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        return false;
+    }
 }

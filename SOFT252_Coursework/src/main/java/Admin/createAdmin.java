@@ -6,6 +6,7 @@
 package Admin;
 
 
+import Interfaces.IWriteJSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,7 +25,7 @@ import javax.swing.JOptionPane;
  *
  * @author Lewis
  */
-public class createAdmin extends javax.swing.JFrame {
+public class createAdmin extends javax.swing.JFrame implements IWriteJSON {
     public String firstName;
     public String lastName;
     public String username;
@@ -154,56 +155,25 @@ public class createAdmin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        AdminChecks(tfFName.getText(), tfLName.getText(), tfUser.getText(), tfPass.getText());
+
+         
+    }//GEN-LAST:event_jButton1ActionPerformed
+public Boolean AdminChecks(String firstName, String lastName, String username, String password)
+{
         firstName = tfFName.getText();
         lastName = tfLName.getText();
         username = tfUser.getText();
         password = tfPass.getText();
-        addAdmin(firstName, lastName, username, password);
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-public Boolean addAdmin(String firstName, String lastName, String userName, String password)
-{
-    char a = 'A';
-        if (a == userName.charAt(0))
-        {
-            JSONParser parser = new JSONParser();
-            try (Reader reader = new FileReader("src/main/java/JSON/Admins.json"))
-            {
-                
-                JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
-                JSONArray admins = (JSONArray) jsonObject.get("admins");
-                JSONObject newAdmin = new JSONObject();
+        JSONObject newAdmin = new JSONObject();
                 newAdmin.put("firstname", firstName);
                 newAdmin.put("surname", lastName);
-                newAdmin.put("username", userName);
+                newAdmin.put("username", username);
                 newAdmin.put("password", password);
-                admins.add(newAdmin);
-                FileWriter JSONFile = new FileWriter("src/main/java/JSON/Admins.json");
-                try
-                {
-                    String intro = ("{" + (char)34 + "admins" + (char)34) + ":";
-                    JSONFile.write(intro + admins.toJSONString() + "}");
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-                JSONFile.flush();
-                JSONFile.close();
-                
-            }
-            catch (FileNotFoundException e)
-            {
-                e.printStackTrace();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            catch (ParseException e)
-            {
-                e.printStackTrace();
-            }
+                 char a = 'A';
+        if (a == username.charAt(0))
+        {
+            WriteToJSON("JSON/Admins.json", newAdmin, "admins");
             JOptionPane.showMessageDialog(null, "Administrator created! Please close this window and check if the administrator is able to login.");
             return true;
         }
@@ -262,4 +232,45 @@ public Boolean addAdmin(String firstName, String lastName, String userName, Stri
     private javax.swing.JTextField tfPass;
     private javax.swing.JTextField tfUser;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean WriteToJSON(String fileName, JSONObject objectToWrite, String arrayName) {
+        JSONParser parser = new JSONParser();
+            try (Reader reader = new FileReader(fileName))
+            {
+                
+                JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+                JSONArray array = (JSONArray) jsonObject.get(arrayName);
+                
+                array.add(objectToWrite);
+                FileWriter JSONFile = new FileWriter(fileName);
+                try
+                {
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":";
+                    JSONFile.write(intro + array.toJSONString() + "}");
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                JSONFile.flush();
+                JSONFile.close();
+                return true;
+                
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        return false;
+    }
 }
+ 

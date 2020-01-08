@@ -46,13 +46,13 @@ public class createAdminTest {
         createAdmin instance = new createAdmin();
         //Firstly create a failure
         Boolean result1;
-        result1 = instance.addAdmin("Test", "Test", "Test", "Test");
+        result1 = instance.AdminChecks("Test", "Test", "Test", "Test");
         Boolean expectedResult = false;
         
         assertEquals(result1, expectedResult);
         //Secondly create a successful admin
         Boolean result2;
-        result2 = instance.addAdmin("Lewis", "Jones", "A103", "beans");
+        result2 = instance.AdminChecks("Lewis", "Jones", "A103", "beans");
         Boolean expectedResult2 = true;
         assertEquals(result2, expectedResult2);
         

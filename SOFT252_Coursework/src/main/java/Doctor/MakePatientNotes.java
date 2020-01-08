@@ -5,6 +5,7 @@
  */
 package Doctor;
 
+import Interfaces.IWriteJSON;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,7 +21,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author Lewis
  */
-public class MakePatientNotes extends javax.swing.JFrame {
+public class MakePatientNotes extends javax.swing.JFrame implements IWriteJSON {
 
     /**
      * Creates new form MakePatientNotes
@@ -189,11 +190,7 @@ private void addNotes()
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray allNotes = (JSONArray) jsonObject.get("PatientRecords");
             allNotes.add(newNotes);
-        FileWriter JSONFile = new FileWriter("JSON/PatientHistoryRecords.json");
-            String intro = ("{" + (char)34 + "PatientRecords" + (char)34) + ":";
-            JSONFile.write(intro + allNotes.toJSONString() + "}");
-            JSONFile.flush();
-            JSONFile.close();
+            WriteToJSON("JSON/PatientHistoryRecords.json", newNotes, "PatientRecords");
         }
         catch (FileNotFoundException e)
         {
@@ -253,4 +250,46 @@ private void addNotes()
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea taNotes;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean WriteToJSON(String fileName, JSONObject objectToWrite, String arrayName) {
+       JSONParser parser = new JSONParser();
+            try (Reader reader = new FileReader(fileName))
+            {
+                
+                JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+                JSONArray array = (JSONArray) jsonObject.get(arrayName);
+                
+                array.add(objectToWrite);
+                FileWriter JSONFile = new FileWriter(fileName);
+                try
+                {
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":";
+                    JSONFile.write(intro + array.toJSONString() + "}");
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                JSONFile.flush();
+                JSONFile.close();
+                return true;
+                
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        return false;
+    }
 }

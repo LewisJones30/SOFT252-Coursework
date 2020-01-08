@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Admin;
+import Interfaces.IWriteJSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,7 +19,7 @@ import java.io.FileWriter;
  *
  * @author Lewis
  */
-public class provideFeedback extends javax.swing.JFrame {
+public class provideFeedback extends javax.swing.JFrame implements IWriteJSON {
 
     /**
      * Creates new form provideFeedback
@@ -148,7 +149,7 @@ public class provideFeedback extends javax.swing.JFrame {
     private void cbDocsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDocsActionPerformed
         taPatientFeedback.setText("");
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\PatientFeedback.json")) 
+try (Reader reader = new FileReader("JSON/PatientFeedback.json")) 
         {
             
 JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -186,31 +187,9 @@ JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON obje
         JSONObject newComment = new JSONObject();
         newComment.put("DoctorName", doctorName);
         newComment.put("Comment", comment);
-        
-    try (Reader reader = new FileReader("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\DoctorFeedback.json")) 
-        {
-            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
-            JSONArray feedbackArray = (JSONArray) jsonObject.get("doctorFeedback");
-            feedbackArray.add(newComment);
-            FileWriter JSONFile = new FileWriter("C:\\Users\\Lewis\\Documents\\GitHub\\SOFT252-Coursework\\SOFT252_Coursework\\src\\main\\java\\DoctorFeedback.json");
-            String intro = ("{" + (char)34 + "DoctorFeedback" + (char)34) + ":";
-            JSONFile.write(intro + feedbackArray.toJSONString() + "}");
-            JSONFile.flush();
-            JSONFile.close();
+        WriteToJSON("JSON/PatientFeedback.json", newComment, "PatientFeedback");
     }//GEN-LAST:event_jButton1ActionPerformed
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ParseException e) 
-        {
-            e.printStackTrace();
-        }
-    }
+
     /**
      * @param args the command line arguments
      */
@@ -248,7 +227,7 @@ JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON obje
     public void getDoctors()
     {
         JSONParser parser = new JSONParser(); 
-    try (Reader reader = new FileReader("src/main/java/JSON/Doctors.json")) 
+    try (Reader reader = new FileReader("JSON/Doctors.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray doctors = (JSONArray) jsonObject.get("doctors");
@@ -288,4 +267,46 @@ JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON obje
     private javax.swing.JTextArea taFeedback;
     private javax.swing.JTextArea taPatientFeedback;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean WriteToJSON(String fileName, JSONObject objectToWrite, String arrayName) {
+        JSONParser parser = new JSONParser();
+            try (Reader reader = new FileReader(fileName))
+            {
+                
+                JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+                JSONArray array = (JSONArray) jsonObject.get(arrayName);
+                
+                array.add(objectToWrite);
+                FileWriter JSONFile = new FileWriter(fileName);
+                try
+                {
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":";
+                    JSONFile.write(intro + array.toJSONString() + "}");
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                JSONFile.flush();
+                JSONFile.close();
+                return true;
+                
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        return false;
+    }
 }

@@ -5,6 +5,7 @@
  */
 package Admin;
 
+import Interfaces.IWriteJSON;
 import javax.swing.JOptionPane;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,7 +22,7 @@ import java.io.FileWriter;
  *
  * @author Lewis
  */
-public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
+public class ModifyDoctorsSecretaries extends javax.swing.JFrame implements IWriteJSON {
 
     /**
      * Creates new form ModifyDoctorsSecretaries
@@ -33,8 +34,8 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
     
     private void fillDoctorsSecretaries()
     {
-      fillComboBox("src/main/java/JSON/doctors.json", "doctors");
-      fillComboBox("src/main/java/JSON/Secretaries.json", "secretaries");
+      fillComboBox("JSON/doctors.json", "doctors");
+      fillComboBox("JSON/Secretaries.json", "secretaries");
         
     }
     private void fillComboBox(String fileLocation, String arrayName)
@@ -258,7 +259,7 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
                     newSecretary.put("address", tfAddress.getText());
                     newSecretary.put("username", tfUsername.getText());
                     newSecretary.put("password", tfPassword.getText());
-                    addNewPerson(newSecretary, "src/main/java/JSON/Secretaries.json", ""); //Run method to add a new secretary
+                    WriteToJSON("JSON/Secretaries.json", newSecretary, ""); //Run method to add a new secretary
                 }
                 else
                 {
@@ -285,7 +286,7 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
                     newDoctor.put("address", tfAddress.getText());
                     newDoctor.put("username", tfUsername.getText());
                     newDoctor.put("password", tfPassword.getText());
-                    addNewPerson(newDoctor, "src/main/java/JSON/doctors.json", "doctors"); //Run method to get a new doctor
+                    WriteToJSON("JSON/doctors.json", newDoctor, "doctors"); //Run method to get a new doctor
                 }
                 else
                 {
@@ -367,45 +368,6 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
             e.printStackTrace();
         } 
     }
-    public void addNewPerson(JSONObject newPerson, String fileName, String arrayName) //Code to add a new secretary
-    {
-        JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader(fileName)) 
-        {
-            
-            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
-            JSONArray secretaries = (JSONArray) jsonObject.get(arrayName); //Obtain the full array of secretaries
-            secretaries.add(newPerson); //Add in the new doctor
-            FileWriter JSONFile = new FileWriter(fileName);
-                try
-                {
-                    //Writing code
-                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":"; //Used for the start of JSONArrays
-                    JSONFile.write(intro + secretaries.toJSONString() + "}");
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-                JSONFile.flush(); 
-                JSONFile.close(); //Write and apply changes
-                JOptionPane.showMessageDialog(null, "Successfully added new secretary!");
-            
-        
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ParseException e) 
-        {
-            e.printStackTrace();
-        }
-    }
     
     /**
      * @param args the command line arguments
@@ -463,4 +425,45 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame {
     private javax.swing.JTextField tfPassword;
     private javax.swing.JTextField tfUsername;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean WriteToJSON(String fileName, JSONObject objectToWrite, String arrayName) {
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader(fileName)) 
+        {
+            
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray secretaries = (JSONArray) jsonObject.get(arrayName); //Obtain the full array of secretaries
+            secretaries.add(objectToWrite); //Add in the new doctor
+            FileWriter JSONFile = new FileWriter(fileName);
+                try
+                {
+                    //Writing code
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":"; //Used for the start of JSONArrays
+                    JSONFile.write(intro + secretaries.toJSONString() + "}");
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                JSONFile.flush(); 
+                JSONFile.close(); //Write and apply changes
+                JOptionPane.showMessageDialog(null, "Successfully added new secretary!");
+            
+        
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

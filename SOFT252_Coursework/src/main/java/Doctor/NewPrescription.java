@@ -5,6 +5,7 @@
  */
 package Doctor;
 
+import Interfaces.IWriteJSON;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,7 +21,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author Lewis
  */
-public class NewPrescription extends javax.swing.JFrame {
+public class NewPrescription extends javax.swing.JFrame implements IWriteJSON{
 
     public String DoctorID;
     public String MedicineName;
@@ -285,34 +286,8 @@ public class NewPrescription extends javax.swing.JFrame {
         newPrescription.put("Comment", comment);
         newPrescription.put("DoctorID", doctorID);
         JSONParser parser = new JSONParser();
-
-        try (Reader reader = new FileReader("JSON/Prescriptions.json")) 
-        {
-            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
-            JSONArray allPrescriptions = (JSONArray) jsonObject.get("Prescriptions");
-            allPrescriptions.add(newPrescription);
-            FileWriter JSONFile = new FileWriter("src/main/java/JSON/Prescriptions.json");
-            String intro = ("{" + (char)34 + "Prescriptions" + (char)34) + ":";
-            JSONFile.write(intro + allPrescriptions.toJSONString() + "}");  
-            JSONFile.flush();
-            JSONFile.close();
-            return true;
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-            return false;
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            return false;
-        }
-        catch (ParseException e) 
-        {
-            e.printStackTrace();
-            return false;
-        }
+        boolean result = WriteToJSON("JSON/Prescriptions.json", newPrescription, "Prescriptions");
+        return result;
     }
         
     /**
@@ -395,4 +370,46 @@ public String GetDoctorID()
     private javax.swing.JTextArea taDosage;
     private javax.swing.JTextField tfQuantity;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean WriteToJSON(String fileName, JSONObject objectToWrite, String arrayName) {
+        JSONParser parser = new JSONParser();
+            try (Reader reader = new FileReader(fileName))
+            {
+                
+                JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+                JSONArray array = (JSONArray) jsonObject.get(arrayName);
+                
+                array.add(objectToWrite);
+                FileWriter JSONFile = new FileWriter(fileName);
+                try
+                {
+                    String intro = ("{" + (char)34 + arrayName + (char)34) + ":";
+                    JSONFile.write(intro + array.toJSONString() + "}");
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                JSONFile.flush();
+                JSONFile.close();
+                return true;
+                
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        return false;
+    }
 }

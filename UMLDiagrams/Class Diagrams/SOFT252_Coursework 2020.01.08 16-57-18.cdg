@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SOFT252_Coursework">
+  <ClassDiagramComponents>
+    <Class name="AdminDashboard" package="Admin" visibility="public" xPosition="615.0" yPosition="-8.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="adminName"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="jButton5ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton4ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton3ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="createAdmin" package="Admin" visibility="public" xPosition="14.0" yPosition="247.0">
+      <Fields>
+        <Field name="firstName" type="String" visibility="public"/>
+        <Field name="lastName" type="String" visibility="public"/>
+        <Field name="username" type="String" visibility="public"/>
+        <Field name="password" type="String" visibility="public"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="addAdmin" returnType="Boolean" visibility="public">
+          <Argument type="String" name="firstName"/>
+          <Argument type="String" name="lastName"/>
+          <Argument type="String" name="userName"/>
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ModifyDoctorsSecretaries" package="Admin" visibility="public" xPosition="178.0" yPosition="11.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="fillDoctorsSecretaries" returnType="void" visibility="private"/>
+        <Method name="fillComboBox" returnType="void" visibility="private">
+          <Argument type="String" name="fileLocation"/>
+          <Argument type="String" name="arrayName"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="provideFeedback" package="Admin" visibility="public" xPosition="178.0" yPosition="690.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="cbDocsActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="getDoctors" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="DoctorDashboard" package="Doctor" visibility="public" xPosition="2057.0" yPosition="286.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="doctorID"/>
+          <Argument type="String" name="doctorname"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getDoctorID" returnType="String" visibility="public"/>
+        <Method name="jButton4ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton5ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton6ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton7ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="WriteRequest" returnType="void" visibility="private">
+          <Argument type="JSONObject" name="newRequest"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MakePatientNotes" package="Doctor" visibility="public" xPosition="2625.0" yPosition="286.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="fillPatients" returnType="void" visibility="private"/>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="cbPatientsActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="addNotes" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="NewPrescription" package="Doctor" visibility="public" xPosition="2625.0" yPosition="519.0">
+      <Fields>
+        <Field name="DoctorID" type="String" visibility="public"/>
+        <Field name="MedicineName" type="String" visibility="public"/>
+        <Field name="Quantity" type="String" visibility="public"/>
+        <Field name="PatientID" type="String" visibility="public"/>
+        <Field name="Comment" type="String" visibility="public"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="doctorID"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="fillPatients" returnType="void" visibility="public"/>
+        <Method name="cbPatientNumberActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="checkPrescription" returnType="boolean" visibility="public"/>
+        <Method name="getInformation" returnType="void" visibility="private"/>
+        <Method name="fillMedicines" returnType="void" visibility="private"/>
+        <Method name="GetDoctorID" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="AllDoctorRating" package="GUI" visibility="public" xPosition="181.0" yPosition="514.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="cbDocsActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="getDoctors" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="DoctorRating" package="GUI" visibility="public" xPosition="1961.0" yPosition="946.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="PatientID"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="cbDocsActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="fillDoctors" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Login" package="GUI" visibility="public" xPosition="1118.0" yPosition="11.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getloggedInId" returnType="String" visibility="public"/>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="attemptLoginUser" returnType="boolean" visibility="public">
+          <Argument type="JSONObject" name="person"/>
+          <Argument type="String" name="type"/>
+          <Argument type="String" name="enteredUsername"/>
+          <Argument type="String" name="enteredPassword"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PatientDashboard" package="GUI" visibility="public" xPosition="1469.0" yPosition="553.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="WelcomeText"/>
+          <Argument type="String" name="patient"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="jButton5ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton7ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton3ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton4ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="btnFeedbackActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="btnLogOutActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="findPrescription" returnType="void" visibility="private"/>
+        <Method name="findAppointments" returnType="void" visibility="private"/>
+        <Method name="sendTerminationRequest" returnType="void" visibility="private"/>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="fillComboBox" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PatientHistory" package="GUI" visibility="public" xPosition="1128.0" yPosition="743.0">
+      <Fields>
+        <Field name="text" type="String" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="WelcomeText"/>
+          <Argument type="String" name="PatientID"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="loadPatientHistory" returnType="Boolean" visibility="public">
+          <Argument type="String" name="PatientID"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="RequestAppointment" package="GUI" visibility="public" xPosition="1568.0" yPosition="974.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="patientID"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="cbDocsActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="fillComboBox" returnType="void" visibility="public" isFinal="true"/>
+      </Methods>
+    </Class>
+    <Class name="SignUpPage" package="GUI" visibility="public" xPosition="2096.0" yPosition="11.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="SendToNewPatients" returnType="void" visibility="private"/>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="AccountRemovalRequests" package="Secretary" visibility="public" xPosition="1230.0" yPosition="578.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="getRemovals" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="AppointmentRequests" package="Secretary" visibility="public" xPosition="230.0" yPosition="1326.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="btnCloseActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="LoadRequests" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="CreateAppointment" package="Secretary" visibility="public" xPosition="602.0" yPosition="1498.0">
+      <Fields>
+        <Field name="DoctorName" type="String" visibility="public"/>
+        <Field name="PatientID" type="String" visibility="public"/>
+        <Field name="AppointmentDate" type="String" visibility="public"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="CreateAppointment" returnType="Boolean" visibility="public">
+          <Argument type="String" name="doctorName"/>
+          <Argument type="String" name="patientID"/>
+          <Argument type="String" name="AppointmentDate"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="fillDoctors" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="NewPatients" package="Secretary" visibility="public" xPosition="201.0" yPosition="921.0">
+      <Fields>
+        <Field name="firstname" type="String" visibility="public"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getPatients" returnType="String" visibility="public"/>
+        <Method name="getFirstname" returnType="String" visibility="public"/>
+        <Method name="getLastname" returnType="String" visibility="public"/>
+        <Method name="getAddress" returnType="String" visibility="public"/>
+        <Method name="getAge" returnType="String" visibility="public"/>
+        <Method name="getGender" returnType="String" visibility="public"/>
+        <Method name="cbPatientsActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="confirmPatientActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="updatePatients" returnType="void" visibility="private"/>
+        <Method name="LoadPatients" returnType="void" visibility="private"/>
+        <Method name="ApprovePatient" returnType="void" visibility="private"/>
+        <Method name="getFirstName" returnType="String" visibility="public"/>
+        <Method name="getLastName" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="orderMedicine" package="Secretary" visibility="public" xPosition="1128.0" yPosition="974.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="chbMedicinesActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="fillMedicines" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="patientManagement" package="Secretary" visibility="public" xPosition="646.0" yPosition="898.0">
+      <Fields>
+        <Field name="patientID" type="String" visibility="public"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="cbPatientsActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton3ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="RemovePatient" returnType="boolean" visibility="public">
+          <Argument type="String" name="patientUsername"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="UpdateTextFields" returnType="void" visibility="public"/>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="fillPatients" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="SecretaryDashboard" package="Secretary" visibility="public" xPosition="646.0" yPosition="1190.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="jButton3ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton6ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton5ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton8ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton7ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="btnMedReqActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Patient" package="Users" visibility="public" xPosition="20.0" yPosition="1620.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Secretary" package="Users" visibility="public" xPosition="320.0" yPosition="1620.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Interface name="IAppointment" package="Interfaces" visibility="public" xPosition="1899.0" yPosition="796.0">
+      <Methods/>
+    </Interface>
+    <Interface name="IDoctorFeedback" package="Interfaces" visibility="public" xPosition="1995.0" yPosition="1312.0">
+      <Methods>
+        <Method name="getDoctorID" returnType="String" visibility="package"/>
+        <Method name="getFeedbackNotes" returnType="String" visibility="package"/>
+        <Method name="getRating" returnType="int" visibility="package"/>
+        <Method name="setDoctorID" returnType="void" visibility="package"/>
+        <Method name="setRating" returnType="void" visibility="package"/>
+        <Method name="setFeedbackNotes" returnType="void" visibility="package"/>
+      </Methods>
+    </Interface>
+    <Interface name="IPatient" package="Interfaces" visibility="public" xPosition="1446.0" yPosition="1296.0">
+      <Methods>
+        <Method name="getFirstName" returnType="String" visibility="public"/>
+        <Method name="getLastName" returnType="String" visibility="public"/>
+        <Method name="getGender" returnType="String" visibility="public"/>
+        <Method name="getAge" returnType="String" visibility="public"/>
+        <Method name="getAddress" returnType="String" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Interface name="IPrescription" package="Interfaces" visibility="public" xPosition="1227.0" yPosition="1424.0">
+      <Methods>
+        <Method name="getDoctorID" returnType="String" visibility="package"/>
+        <Method name="getPatientID" returnType="String" visibility="package"/>
+        <Method name="getDoctorNotes" returnType="String" visibility="package"/>
+        <Method name="getMedicine" returnType="Medicine" visibility="package"/>
+        <Method name="getQuantity" returnType="int" visibility="package"/>
+        <Method name="getDosage" returnType="int" visibility="package"/>
+      </Methods>
+    </Interface>
+    <Interface name="IUsers" package="Interfaces" visibility="public" xPosition="1469.0" yPosition="1522.0">
+      <Methods>
+        <Method name="setName" returnType="String" visibility="package">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="setSurname" returnType="String" visibility="package">
+          <Argument type="String" name="surname"/>
+        </Method>
+        <Method name="setAddress" returnType="String" visibility="package">
+          <Argument type="String" name="address"/>
+        </Method>
+        <Method name="setUserID" returnType="String" visibility="package">
+          <Argument type="String" name="UserID"/>
+        </Method>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation name="PatientID" source="GUI.Login" target="GUI.PatientDashboard" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="DoctorID" source="GUI.Login" target="Doctor.DoctorDashboard" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="SecretaryID" source="GUI.Login" target="Secretary.SecretaryDashboard" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="AdminID" source="GUI.Login" target="Admin.AdminDashboard" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
