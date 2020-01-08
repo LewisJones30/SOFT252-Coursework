@@ -68,7 +68,7 @@ public class PatientDashboard extends javax.swing.JFrame {
 
         lblName.setText(text);
 
-        jLabel2.setText("You are a Patient. You will have limited access.");
+        jLabel2.setText("This is the patient dashboard.");
 
         jButton1.setText("Request Account Termination");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -156,10 +156,10 @@ public class PatientDashboard extends javax.swing.JFrame {
                         .addGap(121, 121, 121)
                         .addComponent(lblName))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
+                        .addGap(132, 132, 132)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
+                        .addGap(169, 169, 169)
                         .addComponent(btnLogOut)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

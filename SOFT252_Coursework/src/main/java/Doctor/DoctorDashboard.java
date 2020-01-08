@@ -111,6 +111,11 @@ public class DoctorDashboard extends javax.swing.JFrame {
         });
 
         jButton7.setText("Make notes on a patient");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,6 +251,11 @@ public class DoctorDashboard extends javax.swing.JFrame {
             new PatientHistory(welcomeText, patientID).setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        new MakePatientNotes().setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
 private void WriteRequest(JSONObject newRequest)
 {
     JSONParser parser = new JSONParser();

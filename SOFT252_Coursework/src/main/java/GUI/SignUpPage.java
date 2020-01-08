@@ -173,7 +173,7 @@ private void SendToNewPatients()
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray newPatientsArray = (JSONArray) jsonObject.get("NewPatients");
             newPatientsArray.add(newPatient);
-            FileWriter JSONFile = new FileWriter("src/main/java/JSON/NewPatients.json");
+            FileWriter JSONFile = new FileWriter("JSON/NewPatients.json");
             String intro = ("{" + (char)34 + "NewPatients" + (char)34) + ":";
             JSONFile.write(intro + newPatientsArray.toJSONString() + "}");
             JSONFile.flush();

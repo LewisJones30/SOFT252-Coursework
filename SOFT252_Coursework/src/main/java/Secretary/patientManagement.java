@@ -230,7 +230,7 @@ public class patientManagement extends javax.swing.JFrame {
         if (dialogResult == JOptionPane.YES_OPTION)
         {
            JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
+        try (Reader reader = new FileReader("JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -243,7 +243,7 @@ public class patientManagement extends javax.swing.JFrame {
                     patients.remove(i);
                 }
             }
-            FileWriter JSONFile = new FileWriter("src/main/java/JSON/Patients.json");
+            FileWriter JSONFile = new FileWriter("JSON/Patients.json");
         try
         {
             String intro = ("{" + (char)34 + "patients" + (char)34) + ":";
@@ -296,7 +296,7 @@ public void UpdateTextFields()
     System.out.println("Updating...");
     System.out.println(cbPatients.getSelectedItem());
     JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
+        try (Reader reader = new FileReader("JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -362,7 +362,7 @@ public void UpdateTextFields()
     }
     public void fillPatients(){
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("src/main/java/JSON/Patients.json")) 
+        try (Reader reader = new FileReader("JSON/Patients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object

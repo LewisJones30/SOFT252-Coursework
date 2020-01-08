@@ -9,11 +9,6 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>group.id</groupId>
-            <artifactId>artifact.id</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.3.1</version>
@@ -32,12 +27,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-    <groupId>com.googlecode.json-simple</groupId>
-    <artifactId>json-simple</artifactId>
-    <version>1.</version>
-    <scope>system</scope>
-    <systemPath>${project.basedir}/src/main/resources/json-simple-1.1.jar</systemPath>
-</dependency>
+            <groupId>group.id</groupId>
+            <artifactId>artifact.id</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -207,6 +208,8 @@ public class NewPatients extends javax.swing.JFrame implements IPatient {
     private void confirmPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPatientActionPerformed
         // TODO add your handling code here:
         ApprovePatient();
+        JOptionPane.showMessageDialog(null, "Successfully added patient!");
+        
     }//GEN-LAST:event_confirmPatientActionPerformed
 
     /**
@@ -285,7 +288,7 @@ try (Reader reader = new FileReader("JSON/NewPatients.json"))
     private void LoadPatients()
     {
         JSONParser parser = new JSONParser();
-try (Reader reader = new FileReader("NewPatients.json")) 
+try (Reader reader = new FileReader("JSON/NewPatients.json")) 
         {
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -334,6 +337,37 @@ try (Reader reader = new FileReader("JSON/Patients.json"))
             JSONFile.close();
     }
         catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
+    try (Reader reader = new FileReader("JSON/NewPatients.json")) 
+        {
+            
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray newPatientsArray = (JSONArray) jsonObject.get("NewPatients");
+            for (int i = 0; i < newPatientsArray.size(); i++) {
+                JSONObject current = (JSONObject) newPatientsArray.get(i);
+                if (current.get("firstname").equals(getFirstName().toString()))
+                {
+                    newPatientsArray.remove(i);
+                }
+                FileWriter JSONFile = new FileWriter("JSON/NewPatients.json");
+            String intro = ("{" + (char)34 + "NewPatients" + (char)34) + ":";
+            JSONFile.write(intro + newPatientsArray.toJSONString() + "}");
+            JSONFile.flush();
+            JSONFile.close();
+            }
+            
+    }
+    catch (FileNotFoundException e)
         {
             e.printStackTrace();
         }
