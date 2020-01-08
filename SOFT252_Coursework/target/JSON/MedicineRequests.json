@@ -1,0 +1,7 @@
+{
+    "medicineRequests" : [
+    {
+        "medicineName" : "testMedicine"
+    }
+    ]
+}
