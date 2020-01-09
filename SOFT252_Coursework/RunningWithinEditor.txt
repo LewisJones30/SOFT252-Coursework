@@ -1,6 +1,0 @@
-The program will not build until the artifact-1.0.jar has been given the json-simple1.1.jar file
-To do this:
-In Netbeans, click the Dependencies.
-Right click Dependencies and click Manually install artifact.
-Navigate to SOFT252_Coursework/src/main/resources/json-simple-1.1.jar and then manually install.
-The program should now run within the editor.

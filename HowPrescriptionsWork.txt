@@ -1,0 +1,3 @@
+I have tweaked the prescriptions a little bit:
+A doctor is only able to prescribe a medicine if there is enough of that medicine in stock.
+When a secretary orders medicine, it will automatically update the medicine count.

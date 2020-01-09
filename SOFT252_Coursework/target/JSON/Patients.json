@@ -1,1 +1,1 @@
-{"patients":[]}
+{"patients":[{"firstname":"Carol","password":"password","address":"64 Magic Lane, Plymouth, PL7 1TU","gender":"Female","surname":"McGill","age":"61","username":"P102"},{"firstname":"Katrina","password":"password","address":"59 Exeter Street, Plymouth, PL1 2AA","gender":"Female","surname":"Smith","age":"26","username":"P105"},{"firstname":"Steven","password":"password","address":"64 Magic Lane, Plymouth, PL7 1TU","gender":"Female","surname":"McGuire","age":"61","username":"P580"}]}

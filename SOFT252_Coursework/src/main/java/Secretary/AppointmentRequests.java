@@ -165,6 +165,33 @@ public class AppointmentRequests extends javax.swing.JFrame {
         {
             e.printStackTrace();
         }
+        taAppointments.setText(taAppointments.getText() + "Doctor Proposals: " + "\n");
+        try (Reader reader = new FileReader("JSON/ProposedAppointments.json")) 
+        {
+            
+            JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
+            JSONArray appointments = (JSONArray) jsonObject.get("ProposedAppointments");
+            for (int i = 0; i < appointments.size(); i++) 
+            {
+                JSONObject currentAppointment = (JSONObject) appointments.get(i);
+                String doctorID = currentAppointment.get("DoctorID").toString();
+                String Date = currentAppointment.get("ProposedDate").toString();
+                taAppointments.setText(taAppointments.getText() + "DoctorID: " + doctorID + " " + "Proposed date: " + Date + "\n");
+                
+            }
+            }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e) 
+        {
+            e.printStackTrace();
+        }
 
 
     }

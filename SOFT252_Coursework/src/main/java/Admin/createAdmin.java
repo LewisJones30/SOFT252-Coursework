@@ -161,10 +161,6 @@ public class createAdmin extends javax.swing.JFrame implements IWriteJSON {
     }//GEN-LAST:event_jButton1ActionPerformed
 public Boolean AdminChecks(String firstName, String lastName, String username, String password)
 {
-        firstName = tfFName.getText();
-        lastName = tfLName.getText();
-        username = tfUser.getText();
-        password = tfPass.getText();
         JSONObject newAdmin = new JSONObject();
                 newAdmin.put("firstname", firstName);
                 newAdmin.put("surname", lastName);

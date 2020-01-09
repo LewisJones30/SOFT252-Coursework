@@ -259,7 +259,7 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame implements IWri
                     newSecretary.put("address", tfAddress.getText());
                     newSecretary.put("username", tfUsername.getText());
                     newSecretary.put("password", tfPassword.getText());
-                    WriteToJSON("JSON/Secretaries.json", newSecretary, ""); //Run method to add a new secretary
+                    WriteToJSON("JSON/Secretaries.json", newSecretary, "secretaries"); //Run method to add a new secretary
                 }
                 else
                 {
@@ -448,7 +448,7 @@ public class ModifyDoctorsSecretaries extends javax.swing.JFrame implements IWri
                 }
                 JSONFile.flush(); 
                 JSONFile.close(); //Write and apply changes
-                JOptionPane.showMessageDialog(null, "Successfully added new secretary!");
+                JOptionPane.showMessageDialog(null, "Successfully added new user!");
             
         
         }

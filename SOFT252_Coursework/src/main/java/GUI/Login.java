@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     String loggedInID = "0";
+    Boolean loginSuccess = false;
     /**
      * Creates new form Login
      */
@@ -148,7 +149,11 @@ public String getloggedInId()
             JSONArray doctors = (JSONArray) jsonObject.get("doctors");
             for (int i = 0; i < doctors.size(); i++) {
                 JSONObject test = (JSONObject) doctors.get(i);
-                attemptLoginUser(test, "D", tfUsername.getText(), tfPassword.getText());
+                Boolean attempt = attemptLoginUser(test, "D", tfUsername.getText(), tfPassword.getText());
+                if (attempt == true)
+                {
+                    loginSuccess = true;
+                }
             }
         }
         catch (FileNotFoundException e)
@@ -171,7 +176,11 @@ public String getloggedInId()
             JSONArray patients = (JSONArray) jsonObject.get("patients");
             for (int i = 0; i < patients.size(); i++) {
                 JSONObject test = (JSONObject) patients.get(i);
-                attemptLoginUser(test, "P", tfUsername.getText(), tfPassword.getText());      
+                Boolean attempt = attemptLoginUser(test, "P", tfUsername.getText(), tfPassword.getText());
+                if (attempt == true)
+                {
+                    loginSuccess = true;
+                }
             }
             
         
@@ -196,7 +205,11 @@ public String getloggedInId()
             JSONArray patients = (JSONArray) jsonObject.get("admins");
             for (int i = 0; i < patients.size(); i++) {
                 JSONObject test = (JSONObject) patients.get(i);
-                attemptLoginUser(test, "A", tfUsername.getText(), tfPassword.getText());  
+                Boolean attempt = attemptLoginUser(test, "A", tfUsername.getText(), tfPassword.getText()); 
+                                if (attempt == true)
+                {
+                    loginSuccess = true;
+                }
             }
         }
         catch (FileNotFoundException e)
@@ -221,7 +234,11 @@ public String getloggedInId()
             
             for (int i = 0; i < array.size(); i++) {
                 JSONObject test = (JSONObject) array.get(i);
-                attemptLoginUser(test, "S", tfUsername.getText(), tfPassword.getText());
+               Boolean attempt =  attemptLoginUser(test, "S", tfUsername.getText(), tfPassword.getText());
+                               if (attempt == true)
+                {
+                    loginSuccess = true;
+                }
                     }
             
         
@@ -238,7 +255,10 @@ public String getloggedInId()
         {
             e.printStackTrace();
         }
-        JOptionPane.showMessageDialog(null, "The username and/or password you have entered is incorrect.");
+        if (loginSuccess == false)
+        {
+            JOptionPane.showMessageDialog(null, "The username or password you have entered is incorrect.");
+        }
         tfUsername.setText("");
         tfPassword.setText("");
         
@@ -265,7 +285,7 @@ public String getloggedInId()
                         }
                         else if ("P".equals(type))
                         {
-                            new PatientDashboard(username, Name).setVisible(true);
+                            new PatientDashboard(Name, username).setVisible(true);
                             this.setVisible(false);
                             return true;
                         }
@@ -286,7 +306,11 @@ public String getloggedInId()
 
                     }
                 }
-                return false;
+                else
+                {
+                    return false;
+                }
+        return false;
        }
     
     /**

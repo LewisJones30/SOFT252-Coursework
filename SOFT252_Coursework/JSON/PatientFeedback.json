@@ -1,17 +1,1 @@
-{"PatientFeedback" : [{
-       "doctorName" : "Eve Jeffery",
-       "feedbackGiven" : "Lovely doctor. Always advising on best practices. Always listening too.",
-       "starRating" : "5"
-},
-{
-    "doctorName" : "Kailan Redman",
-    "feedbackGiven" : "Not very good. Advised me the wrong medicine. Never available when I want to see them.",
-    "starRating" : "2"
- 
-},
-{
-    "doctorName" : "Wade McKinney",
-    "feedbackGiven" : "He's an okay doctor. Not the best i've had but far from the worst. Good at giving advice.",
-    "starRating" : "3"
-}
-]}
+{"PatientFeedback":[{"doctorName":"Eve Jeffery","feedbackGiven":"Lovely doctor. Always advising on best practices. Always listening too.","starRating":"5"},{"doctorName":"Kailan Redman","feedbackGiven":"Not very good. Advised me the wrong medicine. Never available when I want to see them.","starRating":"2"},{"doctorName":"Wade McKinney","feedbackGiven":"He's an okay doctor. Not the best i've had but far from the worst. Good at giving advice.","starRating":"3"},{"DoctorName":"Carol Vorderman","Comment":"Lovely lady."}]}

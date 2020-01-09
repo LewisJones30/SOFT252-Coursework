@@ -219,7 +219,7 @@ public class NewPrescription extends javax.swing.JFrame implements IWriteJSON{
     {
         JSONParser parser = new JSONParser();
 
-        try (Reader reader = new FileReader("src/main/java/MedicineInformation.json")) 
+        try (Reader reader = new FileReader("JSON/MedicineInformation.json")) 
         {
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray allMedicines = (JSONArray) jsonObject.get("medicines");

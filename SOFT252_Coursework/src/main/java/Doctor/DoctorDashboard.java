@@ -60,7 +60,7 @@ public class DoctorDashboard extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnAppointment = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -87,7 +87,12 @@ public class DoctorDashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Create a future appointment");
+        btnAppointment.setText("Propose an Appointment");
+        btnAppointment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAppointmentActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Create a Prescription");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -139,15 +144,13 @@ public class DoctorDashboard extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addComponent(jButton6))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
                             .addComponent(jLabel2)
-                            .addComponent(jButton7))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                            .addComponent(jButton7)
+                            .addComponent(btnAppointment))))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +166,7 @@ public class DoctorDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnAppointment)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
@@ -178,14 +181,14 @@ public class DoctorDashboard extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        new NewPrescription().setVisible(true);
+        new NewPrescription(DoctorID).setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         Appointments = ""; //Reset the appointments as otherwise it will mass duplicate.
         JSONParser parser = new JSONParser();
-        try (Reader reader = new FileReader("src/main/java/JSON/ScheduledAppointments.json")) 
+        try (Reader reader = new FileReader("JSON/ScheduledAppointments.json")) 
         {
             //First, find the object
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
@@ -226,8 +229,13 @@ public class DoctorDashboard extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         String newMedicine = JOptionPane.showInputDialog("Please input the name of the medicine you wish to request.");
-        if (!"".equals(newMedicine))
+        if ("".equals(newMedicine))
         {
+                        JOptionPane.showMessageDialog(null, "You have not inserted a name of a medicine. Please try again.");
+        }
+        else
+        {
+            
             JSONObject newRequest = new JSONObject();
             newRequest.put("medicineName", newMedicine);
             WriteRequest(newRequest);
@@ -236,10 +244,7 @@ public class DoctorDashboard extends javax.swing.JFrame {
             
             
         }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "You have not inserted a name of a medicine. Please try again.");
-        }
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -256,6 +261,11 @@ public class DoctorDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new MakePatientNotes().setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void btnAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppointmentActionPerformed
+new CreateAppointment(DoctorID).setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAppointmentActionPerformed
 private void WriteRequest(JSONObject newRequest)
 {
     JSONParser parser = new JSONParser();
@@ -264,8 +274,8 @@ private void WriteRequest(JSONObject newRequest)
             
             JSONObject jsonObject = (JSONObject) parser.parse(reader); //Parse the JSON object
             JSONArray allRequests = (JSONArray) jsonObject.get("medicineRequests");
-            FileWriter JSONFile = new FileWriter("src/main/java/JSON/MedicineRequests.json");
-            String intro = ("{" + (char)34 + "patients" + (char)34) + ":";
+            FileWriter JSONFile = new FileWriter("JSON/MedicineRequests.json");
+            String intro = ("{" + (char)34 + "medicineRequests" + (char)34) + ":";
             JSONFile.write(intro + allRequests.toJSONString() + "}");
             JSONFile.flush();
             JSONFile.close();
@@ -322,9 +332,9 @@ private void WriteRequest(JSONObject newRequest)
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAppointment;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

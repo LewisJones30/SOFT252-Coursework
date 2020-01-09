@@ -1,0 +1,15 @@
+Admins:
+A101, beans
+A102, beans
+Secretary:
+S101, beans
+Doctors:
+D101, beans
+D102, beans
+D104, beans
+Patients:
+P102, password
+P105, password
+P580, password
+
+If these don't work, ensure that the JSON folder is copied into the same directory as the .jar (should be done automatically).

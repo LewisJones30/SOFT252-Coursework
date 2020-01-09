@@ -178,8 +178,6 @@ public class orderMedicine extends javax.swing.JFrame implements IWriteJSON{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if (chbMedicines.isSelected() == true)
-        {
             JSONParser parser = new JSONParser();
         try (Reader reader = new FileReader("JSON/MedicineInformation.json")) 
         {
@@ -190,22 +188,30 @@ public class orderMedicine extends javax.swing.JFrame implements IWriteJSON{
             {
                 for (int i = 0; i < medicines.size(); i++) {
                 JSONObject currentMed = (JSONObject) medicines.get(i);
-                if (currentMed.get("name").toString().equals(cbMedicines))
+                if (currentMed.get("name").toString().equals(cbMedicines.getSelectedItem()))
                 {
                     int startingQuantity = Integer.parseInt(currentMed.get("quantity").toString());
-                    currentMed.put("name", cbMedicines);
+                    currentMed.put("name", cbMedicines.getSelectedItem());
                     currentMed.put("quantity", startingQuantity + Integer.parseInt(tfQuantity.getText()));
+                    //This code is here because the WriteToJSON will not override if there is one of the same name.
+                    FileWriter JSONFile = new FileWriter("JSON/MedicineInformation.json");
+                    String intro = ("{" + (char)34 + "medicines" + (char)34) + ":";
+                    JSONFile.write(intro + medicines.toJSONString() + "}");
+                    JSONFile.flush();
+                    JSONFile.close();
+                    
                 }
                 }
                 
             }
             else
             {
-                     JSONObject newMedicine = new JSONObject();
+            JSONObject newMedicine = new JSONObject();
             newMedicine.put("name", tfNewMeds.getText());
             newMedicine.put("quantity", tfQuantity.getText());
             medicines.add(newMedicine);
             WriteToJSON("JSON/MedicineInformation.json", newMedicine, "medicines");
+            JOptionPane.showMessageDialog(null, "Successfully stocked the medicine!");
             }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -218,7 +224,6 @@ public class orderMedicine extends javax.swing.JFrame implements IWriteJSON{
             e.printStackTrace();
         }
         }
-    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         new SecretaryDashboard().setVisible(true);

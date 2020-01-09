@@ -163,10 +163,10 @@ public class CreateAppointment extends javax.swing.JFrame implements IWriteJSON
     public Boolean CreateAppointment(String doctorName, String patientID, String AppointmentDate)
     {
             JSONObject newAppointment = new JSONObject();
-            newAppointment.put("DoctorName", cbDocs.getSelectedItem());
-            newAppointment.put("PatientID", tfID.getText());
-            newAppointment.put("AppointmentDate", tfDate.getText());
-            Boolean result = WriteToJSON("JSON/ScheduledAppointments", newAppointment, "ScheduledAppointments");   
+            newAppointment.put("DoctorName", doctorName);
+            newAppointment.put("PatientID", patientID);
+            newAppointment.put("AppointmentDate", AppointmentDate);
+            Boolean result = WriteToJSON("JSON/ScheduledAppointments.json", newAppointment, "ScheduledAppointments");   
             return result;
     }
     /**

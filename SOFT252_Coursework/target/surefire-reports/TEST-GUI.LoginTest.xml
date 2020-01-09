@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="3" failures="0" name="GUI.LoginTest" time="0.026" errors="0" skipped="0">
+<testsuite tests="3" failures="0" name="GUI.LoginTest" time="0.071" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_231\jre\bin"/>
@@ -64,5 +64,5 @@
   </properties>
   <testcase classname="GUI.LoginTest" name="GUI.LoginTest.testMain" time="0"/>
   <testcase classname="GUI.LoginTest" name="GUI.LoginTest.testGetloggedInId" time="0"/>
-  <testcase classname="GUI.LoginTest" name="GUI.LoginTest.testAttemptLoginUser" time="0.026"/>
+  <testcase classname="GUI.LoginTest" name="GUI.LoginTest.testAttemptLoginUser" time="0.071"/>
 </testsuite>

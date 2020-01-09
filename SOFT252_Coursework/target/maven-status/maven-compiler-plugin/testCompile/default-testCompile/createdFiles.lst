@@ -1,6 +1,6 @@
-GUI\PatientHistoryTest.class
-Secretary\CreateAppointmentTest.class
-Secretary\patientManagementTest.class
 Doctor\NewPrescriptionTest.class
 Admin\createAdminTest.class
+GUI\PatientHistoryTest.class
+Secretary\patientManagementTest.class
 GUI\LoginTest.class
+Secretary\CreateAppointmentTest.class
